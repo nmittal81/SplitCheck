@@ -74,7 +74,7 @@ extension CheckViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch(section) {
         case 0: return "Enter total amount of your check"
-        case 1: return "Name                    Drinks         Food              Total"
+        case 1: return "Name                                    Drinks         Food              Total"
         case 2: return "Calculate"
         default: return ""
         }
