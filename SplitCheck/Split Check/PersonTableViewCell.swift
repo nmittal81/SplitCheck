@@ -46,7 +46,10 @@ class PersonTableViewCell: UITableViewCell {
         if let userInfo = notification.userInfo
         , let amount = userInfo["Amount"] as? Double {
             foodTextField.text = "\(amount.rounded(toPlaces: 2))"
-            let total = amount + Double(drinksTextField.text!)!
+            var total = amount
+            if let text = drinksTextField.text, let val =  Double(text) {
+             total = amount + val
+            }
             totalLabelField.text = "\(total.rounded(toPlaces: 2))"
             delegate?.totalCalculated(value: total, tag: indexOfCell)
         }
