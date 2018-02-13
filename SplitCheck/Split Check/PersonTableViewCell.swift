@@ -45,12 +45,12 @@ class PersonTableViewCell: UITableViewCell {
     @objc func updateTextField(_ notification: Notification) {
         if let userInfo = notification.userInfo
         , let amount = userInfo["Amount"] as? Double {
-            foodTextField.text = "\(amount.rounded(toPlaces: 2))"
+            foodTextField.text = "\(amount.rounded(toPlaces: 1))"
             var total = amount
             if let text = drinksTextField.text, let val =  Double(text) {
              total = amount + val
             }
-            totalLabelField.text = "\(total.rounded(toPlaces: 2))"
+            totalLabelField.text = "\(total.rounded(toPlaces: 1))"
             delegate?.totalCalculated(value: total, tag: indexOfCell)
         }
     }
@@ -64,9 +64,9 @@ class PersonTableViewCell: UITableViewCell {
         }
         
         if (textField == drinksTextField) {
-            textTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(textEnteredForDrinks(_:)), userInfo: nil, repeats: false)
+            textTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(textEnteredForDrinks(_:)), userInfo: nil, repeats: false)
         } else if (textField == nameTextField) {
-            textTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(textEnteredForName(_:)), userInfo: nil, repeats: false)
+            textTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(textEnteredForName(_:)), userInfo: nil, repeats: false)
         }
     }
     

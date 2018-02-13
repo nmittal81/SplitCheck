@@ -41,11 +41,12 @@ class TotalTableViewCell: UITableViewCell {
         }
         
         // reschedule the search: in 1.0 second, call the searchForKeyword method on the new textfield content
-        textTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(textEntered(_:)), userInfo: nil, repeats: false)
+        textTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(textEntered(_:)), userInfo: nil, repeats: false)
     }
     
     @objc func textEntered(_ timer: Timer) {
-        
-        delegate?.totalCheckEntered(value: Double(totalTextField.text!)!)
+        if let text = totalTextField.text, text != "" {
+            delegate?.totalCheckEntered(value: Double(totalTextField.text!)!)
+        }
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class CheckViewController: UIViewController {
 
@@ -15,11 +16,38 @@ class CheckViewController: UIViewController {
     var drinksValue = [Double]()
     var peopleArray = [String]()
     var totalArray = [Double]()
+    var managedObjectContext: NSManagedObjectContext? = nil
+    @IBOutlet weak var tableView: UITableView!
+    
+    var event: Events?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(CheckViewController.keyboardWillShow(_:)),
+                                               name: NSNotification.Name.UIKeyboardDidShow,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(CheckViewController.keyboardWillHide(_:)),
+                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               object: nil)
+        
+        if let event = event {
+            totalCheck = event.amount
+            if let members = event.members {
+                self.numberOfCells = members.count
+                for member in members {
+                    let member = member as! MemberOfEvent
+                    peopleArray.append(member.fname!)
+                    drinksValue.append(member.drinks)
+                    totalArray.append(member.total)
+                }
+                tableView.reloadData()
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,6 +82,44 @@ class CheckViewController: UIViewController {
         activityVC.popoverPresentationController?.sourceView = self.view
         self.present(activityVC, animated: true, completion: nil)
     }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        
+        if let keyboardHeight = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {
+            tableView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0)
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        UIView.animate(withDuration: 0.2, animations: {
+            // For some reason adding inset in keyboardWillShow is animated by itself but removing is not, that's why we have to use animateWithDuration here
+            self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        })
+    }
+    
+    func saveDetailsToDB(title: String) {
+        let event: Events = NSEntityDescription.insertNewObject(forEntityName: "Events", into: DataBaseController.getContext()) as! Events
+        event.amount = self.totalCheck
+        event.number = Int16(numberOfCells)
+        let formatter = DateFormatter()
+        // initially set the format based on your datepicker date
+        formatter.dateFormat = "MMM d, yyyy @ HH:MMa"
+        
+        let myDateString = formatter.string(from: Date())
+        
+        event.date = myDateString
+        event.title = title
+        
+        for i in 0...numberOfCells {
+            let member: MemberOfEvent = NSEntityDescription.insertNewObject(forEntityName: "MemberOfEvent", into: DataBaseController.getContext()) as! MemberOfEvent
+            member.fname = peopleArray[i]
+            member.drinks = drinksValue[i]
+            member.total = totalArray[i]
+            member.food = totalArray[i] - drinksValue[i]
+            event.addToMembers(member)
+        }
+        DataBaseController.saveContext()
+    }
 
 }
 
@@ -83,6 +149,9 @@ extension CheckViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TotalTableViewCell", for: indexPath) as! TotalTableViewCell
+            if totalCheck != 0.0 {
+                cell.totalTextField.text = "\(totalCheck)"
+            }
             cell.delegate = self
             return cell
         } else if indexPath.section == tableView.numberOfSections - 1 {
@@ -93,6 +162,12 @@ extension CheckViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonTableViewCell", for: indexPath) as! PersonTableViewCell
             cell.indexOfCell = indexPath.row
             cell.delegate = self
+            if let _ = event {
+                cell.nameTextField.text = peopleArray[indexPath.row]
+                cell.drinksTextField.text = "\(drinksValue[indexPath.row])"
+                cell.totalLabelField.text = "\(totalArray[indexPath.row])"
+                cell.foodTextField.text = "\(totalArray[indexPath.row] - drinksValue[indexPath.row])"
+            }
             return cell
         }
     }
@@ -124,5 +199,30 @@ extension CheckViewController: SubmitTableViewCellDelegate {
         let foodAmount = (self.totalCheck - sum)/Double(numberOfCells)
         let userInfo = ["Amount": foodAmount]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "TotalCalculated"), object: nil, userInfo: userInfo)
+        let alertController = UIAlertController.init(title: "Save", message: "Do you want to save this split?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Yes", style: .default, handler: {
+            _ in
+            let nameAlert = UIAlertController.init(title: "Name", message: "Give a title to celebration.", preferredStyle: .alert)
+            nameAlert.addTextField(configurationHandler: { (textField) -> Void in
+                textField.placeholder = "Event Name"
+                textField.textAlignment = .center
+            })
+            let okAction = UIAlertAction(title: "Yes", style: .default, handler: {
+                _ in
+                let nameField = nameAlert.textFields![0] as UITextField
+                if let text = nameField.text, text != "" {
+                    self.saveDetailsToDB(title: text)
+                }
+            })
+            nameAlert.addAction(okAction)
+            
+            let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+            nameAlert.addAction(cancelAction)
+            self.present(nameAlert, animated: true, completion: nil)
+        })
+        let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
