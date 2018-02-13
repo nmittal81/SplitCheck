@@ -25,10 +25,11 @@ class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        selectedEvent = nil
+        numberOfPeopleTextField.text = "0"
         let fetchRequest:NSFetchRequest<Events> = Events.fetchRequest()
         do {
             dataPreviouslyStored = try DataBaseController.getContext().fetch(fetchRequest)
-            print(dataPreviouslyStored.count)
             if dataPreviouslyStored.count == 0 {
                 tableView.isHidden = true
             } else {

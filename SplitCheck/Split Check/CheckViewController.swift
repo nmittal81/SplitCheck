@@ -103,14 +103,14 @@ class CheckViewController: UIViewController {
         event.number = Int16(numberOfCells)
         let formatter = DateFormatter()
         // initially set the format based on your datepicker date
-        formatter.dateFormat = "MMM d, yyyy @ HH:MMa"
+        formatter.dateFormat = "MMM d, yyyy"
         
         let myDateString = formatter.string(from: Date())
         
         event.date = myDateString
         event.title = title
         
-        for i in 0...numberOfCells {
+        for i in 0...(numberOfCells - 1) {
             let member: MemberOfEvent = NSEntityDescription.insertNewObject(forEntityName: "MemberOfEvent", into: DataBaseController.getContext()) as! MemberOfEvent
             member.fname = peopleArray[i]
             member.drinks = drinksValue[i]
@@ -181,10 +181,12 @@ extension CheckViewController: TotalTableViewCellDelegate {
 
 extension CheckViewController: PersonTableViewCellDelegate {
     func drinkCheckEntered(value: Double, tag: Int) {
+        drinksValue.remove(at: tag)
         drinksValue.insert(value, at: tag)
     }
     
     func nameEntered(value: String, tag: Int) {
+        peopleArray.remove(at: tag)
         peopleArray.insert(value, at: tag)
     }
     
