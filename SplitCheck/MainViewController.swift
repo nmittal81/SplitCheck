@@ -55,12 +55,17 @@ class MainViewController: UIViewController {
             if let selectedEvent = selectedEvent {
                 vc.event = selectedEvent
                 vc.numberOfCells = Int(selectedEvent.number)
+                vc.memberArray = Array(selectedEvent.members!) as! [MemberOfEvent]
             } else {
                 let totalNumber = Int(numberOfPeopleTextField.text!)!
                 vc.numberOfCells = totalNumber
-                vc.drinksValue = [Double](repeating: 0, count: totalNumber)
-                vc.peopleArray = [String](repeating: "", count: totalNumber)
-                vc.totalArray = [Double](repeating: 0, count: totalNumber)
+                let entity = NSEntityDescription.entity(forEntityName: "MemberOfEvent", in: DataBaseController.getContext())
+                var memberArray = [MemberOfEvent]()
+                for _ in 0...totalNumber - 1 {
+                    let member = MemberOfEvent(entity: entity!, insertInto: DataBaseController.getContext())
+                    memberArray.append(member)
+                }
+                vc.memberArray = memberArray
             }
         }
     }

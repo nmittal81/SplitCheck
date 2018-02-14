@@ -178,7 +178,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nCf-he-OtO">
-                                                    <rect key="frame" x="15" y="8" width="174" height="28"/>
+                                                    <rect key="frame" x="15" y="8" width="164" height="28"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" keyboardType="alphabet" returnKeyType="next"/>
@@ -187,9 +187,9 @@
                                                     </connections>
                                                 </textField>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="$" borderStyle="roundedRect" placeholder="Drinks" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gio-2K-2Wl">
-                                                    <rect key="frame" x="199" y="8" width="50" height="28"/>
+                                                    <rect key="frame" x="189" y="8" width="60" height="28"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="wO7-cp-5xm"/>
+                                                        <constraint firstAttribute="width" constant="60" id="wO7-cp-5xm"/>
                                                     </constraints>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>

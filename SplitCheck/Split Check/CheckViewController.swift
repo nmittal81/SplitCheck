@@ -13,12 +13,8 @@ class CheckViewController: UIViewController {
 
     var numberOfCells = 0
     var totalCheck = 0.0
-    var drinksValue = [Double]()
-    var peopleArray = [String]()
-    var totalArray = [Double]()
-    var managedObjectContext: NSManagedObjectContext? = nil
+    var memberArray = [MemberOfEvent]()
     @IBOutlet weak var tableView: UITableView!
-    
     var event: Events?
     
     override func viewDidLoad() {
@@ -39,12 +35,6 @@ class CheckViewController: UIViewController {
             totalCheck = event.amount
             if let members = event.members {
                 self.numberOfCells = members.count
-                for member in members {
-                    let member = member as! MemberOfEvent
-                    peopleArray.append(member.fname!)
-                    drinksValue.append(member.drinks)
-                    totalArray.append(member.total)
-                }
                 tableView.reloadData()
             }
         }
@@ -73,7 +63,8 @@ class CheckViewController: UIViewController {
     @IBAction func shareClicked(_ sender: UIBarButtonItem) {
         var textToShare = ""
         for i in 0...(numberOfCells - 1) {
-            textToShare += "\(peopleArray[i])  \(totalArray[i])\n"
+            let member = memberArray[i]
+            textToShare += "\(member.fname)  \(member.total)\n"
         }
         
         let objectsToShare = [textToShare]
@@ -115,23 +106,23 @@ class CheckViewController: UIViewController {
         
         newEvent.date = myDateString
         newEvent.title = title
-        
-        for i in 0...(numberOfCells - 1) {
-            let member: MemberOfEvent = NSEntityDescription.insertNewObject(forEntityName: "MemberOfEvent", into: DataBaseController.getContext()) as! MemberOfEvent
-            member.fname = peopleArray[i]
-            member.drinks = drinksValue[i]
-            member.total = totalArray[i]
-            member.food = totalArray[i] - drinksValue[i]
-            newEvent.addToMembers(member)
-        }
+        newEvent.members = NSSet(array: memberArray)
+//        for i in 0...(numberOfCells - 1) {
+//            let member: MemberOfEvent = NSEntityDescription.insertNewObject(forEntityName: "MemberOfEvent", into: DataBaseController.getContext()) as! MemberOfEvent
+//            member.fname = memberArray[i].fname
+//            member.drinks = memberArray[i].drinks
+//            member.total = memberArray[i].total
+//            member.food = member.total - member.drinks
+//            newEvent.addToMembers(member)
+//        }
         DataBaseController.saveContext()
     }
 
     @objc func addAnotherRow(sender: UIButton) {
         numberOfCells += 1
-        peopleArray.append("")
-        drinksValue.append(0.0)
-        totalArray.append(0.0)
+        let entity = NSEntityDescription.entity(forEntityName: "MemberOfEvent", in: DataBaseController.getContext())
+        let member = MemberOfEvent(entity: entity!, insertInto: DataBaseController.getContext())
+        memberArray.append(member)
         tableView.reloadData()
     }
 }
@@ -194,14 +185,13 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonTableViewCell", for: indexPath) as! PersonTableViewCell
-            cell.indexOfCell = indexPath.row
             cell.delegate = self
-            if let _ = event {
-                cell.nameTextField.text = peopleArray[indexPath.row]
-                cell.drinksTextField.text = "\(drinksValue[indexPath.row])"
-                cell.totalLabelField.text = "\(totalArray[indexPath.row])"
-                cell.foodTextField.text = "\(totalArray[indexPath.row] - drinksValue[indexPath.row])"
-            }
+            let member = memberArray[indexPath.row]
+            cell.nameTextField.text = member.fname
+            cell.drinksTextField.text = "$\(member.drinks)"
+            cell.totalLabelField.text = "$\(member.total)"
+            cell.foodTextField.text = "$\(member.food)"
+            cell.member = member
             return cell
         }
     }
@@ -215,11 +205,7 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             //TODO
             numberOfCells -= 1
-            print(drinksValue)
-            drinksValue.remove(at: indexPath.row)
-            print(drinksValue)
-            peopleArray.remove(at: indexPath.row)
-            totalArray.remove(at: indexPath.row)
+            memberArray.remove(at: indexPath.row)
             tableView.reloadData()
         }
     }
@@ -232,25 +218,30 @@ extension CheckViewController: TotalTableViewCellDelegate {
 }
 
 extension CheckViewController: PersonTableViewCellDelegate {
-    func drinkCheckEntered(value: Double, tag: Int) {
-        drinksValue.remove(at: tag)
-        drinksValue.insert(value, at: tag)
+    func drinkCheckEntered(value: Double, member: MemberOfEvent) {
+        member.drinks = value
     }
     
-    func nameEntered(value: String, tag: Int) {
-        peopleArray.remove(at: tag)
-        peopleArray.insert(value, at: tag)
+    func nameEntered(value: String, member: MemberOfEvent) {
+        member.fname = value
     }
     
-    func totalCalculated(value: Double, tag: Int) {
-        totalArray.insert(value, at: tag)
+    func totalCalculated(value: Double,  member: MemberOfEvent) {
+        member.total = value
     }
 }
 
 extension CheckViewController: SubmitTableViewCellDelegate {
     func calculateFoodSplit() {
-        let sum = drinksValue.reduce(0, +) as Double
-        let foodAmount = (self.totalCheck - sum)/Double(numberOfCells)
+        if totalCheck == 0 {
+            return
+        }
+        var sum = 0.0
+        for i in 0...numberOfCells - 1 {
+            let member = memberArray[i]
+            sum += member.drinks
+        }
+        let foodAmount = (totalCheck - sum)/Double(numberOfCells)
         let userInfo = ["Amount": foodAmount]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "TotalCalculated"), object: nil, userInfo: userInfo)
         let alertController = UIAlertController.init(title: "Save", message: "Do you want to save this split?", preferredStyle: .alert)

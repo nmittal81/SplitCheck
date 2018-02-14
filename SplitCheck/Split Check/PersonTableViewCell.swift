@@ -9,9 +9,9 @@
 import UIKit
 
 protocol PersonTableViewCellDelegate {
-    func drinkCheckEntered(value: Double, tag: Int)
-    func nameEntered(value: String, tag: Int)
-    func totalCalculated(value: Double, tag: Int)
+    func drinkCheckEntered(value: Double, member: MemberOfEvent)
+    func nameEntered(value: String, member: MemberOfEvent)
+    func totalCalculated(value: Double, member: MemberOfEvent)
 }
 
 class PersonTableViewCell: UITableViewCell {
@@ -20,8 +20,7 @@ class PersonTableViewCell: UITableViewCell {
     @IBOutlet weak var drinksTextField: UITextField!
     @IBOutlet weak var foodTextField: UITextField!
     @IBOutlet weak var totalLabelField: UILabel!
-
-    var indexOfCell = 0
+    var member: MemberOfEvent?
     
     var textTimer: Timer?
     var delegate: PersonTableViewCellDelegate?
@@ -46,12 +45,9 @@ class PersonTableViewCell: UITableViewCell {
         if let userInfo = notification.userInfo
         , let amount = userInfo["Amount"] as? Double {
             foodTextField.text = "$\(amount.rounded(toPlaces: 1))"
-            var total = amount
-            if let text = drinksTextField.text, let val =  Double(text) {
-             total = amount + val
-            }
+            let total = amount + (member?.drinks)!
             totalLabelField.text = "$\(total.rounded(toPlaces: 1))"
-            delegate?.totalCalculated(value: total, tag: indexOfCell)
+            delegate?.totalCalculated(value: total, member: member!)
         }
     }
     
@@ -72,13 +68,13 @@ class PersonTableViewCell: UITableViewCell {
     
     @objc func textEnteredForDrinks(_ timer: Timer) {
         if let text = drinksTextField.text?.replacingOccurrences(of: "$", with: ""), let val =  Double(text) {
-            delegate?.drinkCheckEntered(value: val, tag: indexOfCell)
+            delegate?.drinkCheckEntered(value: val, member: member!)
         }
     }
     
     @objc func textEnteredForName(_ timer: Timer) {
         if let text = nameTextField.text, text != "" {
-            delegate?.nameEntered(value: nameTextField.text!, tag: indexOfCell)
+            delegate?.nameEntered(value: text, member: member!)
         }
     }
 
