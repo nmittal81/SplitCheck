@@ -69,7 +69,9 @@ class MainViewController: UIViewController {
 extension MainViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.numberOfPeople = Int(textField.text!)!
+        if let text = textField.text, text != "" {
+            self.numberOfPeople = Int(text)!
+        }
     }
 }
 

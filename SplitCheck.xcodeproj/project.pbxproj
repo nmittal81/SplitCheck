@@ -23,6 +23,7 @@
 		7C7DE73E203365B0004DDECD /* PreviousDataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7DE73D203365B0004DDECD /* PreviousDataTableViewCell.swift */; };
 		7C7DE741203370A5004DDECD /* Events+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7DE73F203370A5004DDECD /* Events+CoreDataClass.swift */; };
 		7C7DE742203370A5004DDECD /* Events+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7DE740203370A5004DDECD /* Events+CoreDataProperties.swift */; };
+		7C7DE74420338579004DDECD /* GenericExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7DE74320338579004DDECD /* GenericExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		7C7DE73D203365B0004DDECD /* PreviousDataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousDataTableViewCell.swift; sourceTree = "<group>"; };
 		7C7DE73F203370A5004DDECD /* Events+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Events+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7C7DE740203370A5004DDECD /* Events+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Events+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7C7DE74320338579004DDECD /* GenericExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				7C021CD9202B425900902842 /* LaunchScreen.storyboard */,
 				7C021CDC202B425900902842 /* Info.plist */,
 				7C7DE6EB20334956004DDECD /* Model.xcdatamodeld */,
+				7C7DE74320338579004DDECD /* GenericExtensions.swift */,
 			);
 			path = SplitCheck;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 				7C7DE73C20335BCF004DDECD /* MemberOfEvent+CoreDataProperties.swift in Sources */,
 				7C021CEA202B649900902842 /* SubmitTableViewCell.swift in Sources */,
 				7C7DE73E203365B0004DDECD /* PreviousDataTableViewCell.swift in Sources */,
+				7C7DE74420338579004DDECD /* GenericExtensions.swift in Sources */,
 				7C021CE6202B511300902842 /* PersonTableViewCell.swift in Sources */,
 				7C021CD1202B425800902842 /* AppDelegate.swift in Sources */,
 			);
