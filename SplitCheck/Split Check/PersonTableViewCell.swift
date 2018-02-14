@@ -41,6 +41,15 @@ class PersonTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func updateView() {
+        if let member = member {
+            nameTextField.text = member.fname
+            drinksTextField.text = "$\(member.drinks)"
+            totalLabelField.text = "$\(member.total)"
+            foodTextField.text = "$\(member.food)"
+        }
+    }
+    
     @objc func updateTextField(_ notification: Notification) {
         if let userInfo = notification.userInfo
         , let amount = userInfo["Amount"] as? Double {

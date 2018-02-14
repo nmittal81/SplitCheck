@@ -24,6 +24,7 @@
 		7C7DE741203370A5004DDECD /* Events+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7DE73F203370A5004DDECD /* Events+CoreDataClass.swift */; };
 		7C7DE742203370A5004DDECD /* Events+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7DE740203370A5004DDECD /* Events+CoreDataProperties.swift */; };
 		7C7DE74420338579004DDECD /* GenericExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7DE74320338579004DDECD /* GenericExtensions.swift */; };
+		7C7DE7472034BFCE004DDECD /* ContactsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7DE7462034BFCE004DDECD /* ContactsHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		7C7DE73F203370A5004DDECD /* Events+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Events+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7C7DE740203370A5004DDECD /* Events+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Events+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7C7DE74320338579004DDECD /* GenericExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericExtensions.swift; sourceTree = "<group>"; };
+		7C7DE7462034BFCE004DDECD /* ContactsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 		7C021CCF202B425800902842 /* SplitCheck */ = {
 			isa = PBXGroup;
 			children = (
+				7C7DE7452034BFBE004DDECD /* Contacts */,
 				7C7DE71E2033594D004DDECD /* CoreData */,
 				7C021CE4202B4FD500902842 /* Split Check */,
 				7C021CD0202B425800902842 /* AppDelegate.swift */,
@@ -115,6 +118,14 @@
 			);
 			name = CoreData;
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		7C7DE7452034BFBE004DDECD /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				7C7DE7462034BFCE004DDECD /* ContactsHandler.swift */,
+			);
+			path = Contacts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,6 +214,7 @@
 				7C7DE74420338579004DDECD /* GenericExtensions.swift in Sources */,
 				7C021CE6202B511300902842 /* PersonTableViewCell.swift in Sources */,
 				7C021CD1202B425800902842 /* AppDelegate.swift in Sources */,
+				7C7DE7472034BFCE004DDECD /* ContactsHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

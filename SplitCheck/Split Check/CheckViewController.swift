@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import Contacts
+import ContactsUI
 
 class CheckViewController: UIViewController {
 
@@ -107,14 +109,6 @@ class CheckViewController: UIViewController {
         newEvent.date = myDateString
         newEvent.title = title
         newEvent.members = NSSet(array: memberArray)
-//        for i in 0...(numberOfCells - 1) {
-//            let member: MemberOfEvent = NSEntityDescription.insertNewObject(forEntityName: "MemberOfEvent", into: DataBaseController.getContext()) as! MemberOfEvent
-//            member.fname = memberArray[i].fname
-//            member.drinks = memberArray[i].drinks
-//            member.total = memberArray[i].total
-//            member.food = member.total - member.drinks
-//            newEvent.addToMembers(member)
-//        }
         DataBaseController.saveContext()
     }
 
@@ -124,6 +118,39 @@ class CheckViewController: UIViewController {
         let member = MemberOfEvent(entity: entity!, insertInto: DataBaseController.getContext())
         memberArray.append(member)
         tableView.reloadData()
+    }
+    
+    @objc func importContacts(sender: UIButton) {
+        
+        ContactsHandler.sharedInstance.requestForAccess{(accessGranted) -> Void in
+            if accessGranted {
+//                let store = CNContactStore()
+                
+                let contactPicker = CNContactPickerViewController()
+                contactPicker.delegate = self;
+                contactPicker.displayedPropertyKeys = [CNContactPhoneNumbersKey]
+                
+                self.present(contactPicker, animated: true, completion: nil)
+                
+//                let keysToFetch = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName), CNContactPhoneNumbersKey] as [Any]
+//                let request = CNContactFetchRequest(keysToFetch: keysToFetch as! [CNKeyDescriptor])
+//                var cnContacts = [CNContact]()
+//
+//                do {
+//                    try store.enumerateContacts(with: request){
+//                        (contact, cursor) -> Void in
+//                        cnContacts.append(contact)
+//                    }
+//                } catch let error {
+//                    NSLog("Fetch contact error: \(error)")
+//                }
+//
+//                for contact in cnContacts {
+//                    let fullName = CNContactFormatter.string(from: contact, style: .fullName) ?? "No Name"
+//                    print(fullName)
+//                }
+            }
+        }
     }
 }
 
@@ -159,13 +186,27 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
         if (section == 1) {
             let frame = tableView.frame
             
-            let button = UIButton(frame:   CGRect(x: 5, y: 0, width: frame.size.width, height: 30))
-            button.setTitle("Add another", for: .normal)
-            button.setTitleColor(UIColor.black, for: .normal)
-            button.addTarget(self, action: #selector(self.addAnotherRow), for: .touchUpInside)
+            let addButton = UIButton(frame:   CGRect(x: 15, y: 0, width: 100, height: 30))
+            addButton.setTitle("Add another", for: .normal)
+            addButton.setTitleColor(UIColor.black, for: .normal)
+            addButton.addTarget(self, action: #selector(self.addAnotherRow), for: .touchUpInside)
+            
+            let importContactsButton = UIButton(frame:   CGRect(x: 200, y: 0, width: 150, height: 30))
+            importContactsButton.setTitle("Import Contacts", for: .normal)
+            importContactsButton.setTitleColor(UIColor.black, for: .normal)
+            importContactsButton.addTarget(self, action: #selector(self.importContacts), for: .touchUpInside)
             let headerView = UIView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: 30))  // create custom view
-            headerView.addSubview(button)   // add the button to the view
+            headerView.addSubview(addButton)   // add the button to the view
+            headerView.addSubview(importContactsButton)
             headerView.backgroundColor = UIColor.clear
+            
+            let leftViewLeadingConstraint = NSLayoutConstraint(item: addButton, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal
+                , toItem: headerView, attribute: NSLayoutAttribute.leading, multiplier: 1, constant: 10)
+            
+            let rightViewTrailingConstraint = NSLayoutConstraint(item: importContactsButton, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal
+                , toItem: headerView, attribute: NSLayoutAttribute.trailing, multiplier: 1, constant: 10)
+            
+            NSLayoutConstraint.activate([leftViewLeadingConstraint, rightViewTrailingConstraint])
             return headerView
         }
         return nil
@@ -186,12 +227,8 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PersonTableViewCell", for: indexPath) as! PersonTableViewCell
             cell.delegate = self
-            let member = memberArray[indexPath.row]
-            cell.nameTextField.text = member.fname
-            cell.drinksTextField.text = "$\(member.drinks)"
-            cell.totalLabelField.text = "$\(member.total)"
-            cell.foodTextField.text = "$\(member.food)"
-            cell.member = member
+            cell.member = memberArray[indexPath.row]
+            cell.updateView()
             return cell
         }
     }
@@ -273,5 +310,20 @@ extension CheckViewController: SubmitTableViewCellDelegate {
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
         self.present(alertController, animated: true, completion: nil)
+    }
+}
+
+extension CheckViewController: CNContactPickerDelegate {
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
+        var i = 0
+        for member in memberArray {
+            member.fname = contacts[i].givenName
+            i += 1
+        }
+        tableView.reloadData()
+    }
+    
+    func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
+        dismiss(animated: true, completion: nil)
     }
 }

@@ -61,7 +61,7 @@ class MainViewController: UIViewController {
                 vc.numberOfCells = totalNumber
                 let entity = NSEntityDescription.entity(forEntityName: "MemberOfEvent", in: DataBaseController.getContext())
                 var memberArray = [MemberOfEvent]()
-                for _ in 0...totalNumber - 1 {
+                for i in 0...totalNumber - 1 {
                     let member = MemberOfEvent(entity: entity!, insertInto: DataBaseController.getContext())
                     memberArray.append(member)
                 }
