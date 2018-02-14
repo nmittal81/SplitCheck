@@ -205,6 +205,24 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         }
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            //TODO
+            numberOfCells -= 1
+            print(drinksValue)
+            drinksValue.remove(at: indexPath.row)
+            print(drinksValue)
+            peopleArray.remove(at: indexPath.row)
+            totalArray.remove(at: indexPath.row)
+            tableView.reloadData()
+        }
+    }
 }
 
 extension CheckViewController: TotalTableViewCellDelegate {
