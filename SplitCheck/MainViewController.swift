@@ -64,6 +64,11 @@ class MainViewController: UIViewController {
             }
         }
     }
+    
+    func removeEventFromDB(event: Events) {
+        DataBaseController.getContext().delete(event)
+        DataBaseController.saveContext()
+    }
 }
 
 extension MainViewController: UITextFieldDelegate {
@@ -99,6 +104,20 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedEvent = dataPreviouslyStored[indexPath.row]
         performSegue(withIdentifier: "CheckViewController", sender: self)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            let event = dataPreviouslyStored[indexPath.row]
+            removeEventFromDB(event: event)
+            dataPreviouslyStored.remove(at: indexPath.row)
+            tableView.reloadData()
+        }
     }
 }
 

@@ -98,17 +98,23 @@ class CheckViewController: UIViewController {
     }
     
     func saveDetailsToDB(title: String) {
-        let event: Events = NSEntityDescription.insertNewObject(forEntityName: "Events", into: DataBaseController.getContext()) as! Events
-        event.amount = self.totalCheck
-        event.number = Int16(numberOfCells)
+        var newEvent: Events
+        if let savedEvent = event {
+            newEvent = savedEvent
+            newEvent.removeFromMembers(newEvent.members!)
+        } else {
+            newEvent = NSEntityDescription.insertNewObject(forEntityName: "Events", into: DataBaseController.getContext()) as! Events
+        }
+        newEvent.amount = self.totalCheck
+        newEvent.number = Int16(numberOfCells)
         let formatter = DateFormatter()
         // initially set the format based on your datepicker date
         formatter.dateFormat = "MMM d, yyyy"
         
         let myDateString = formatter.string(from: Date())
         
-        event.date = myDateString
-        event.title = title
+        newEvent.date = myDateString
+        newEvent.title = title
         
         for i in 0...(numberOfCells - 1) {
             let member: MemberOfEvent = NSEntityDescription.insertNewObject(forEntityName: "MemberOfEvent", into: DataBaseController.getContext()) as! MemberOfEvent
@@ -116,14 +122,21 @@ class CheckViewController: UIViewController {
             member.drinks = drinksValue[i]
             member.total = totalArray[i]
             member.food = totalArray[i] - drinksValue[i]
-            event.addToMembers(member)
+            newEvent.addToMembers(member)
         }
         DataBaseController.saveContext()
     }
 
+    @objc func addAnotherRow(sender: UIButton) {
+        numberOfCells += 1
+        peopleArray.append("")
+        drinksValue.append(0.0)
+        totalArray.append(0.0)
+        tableView.reloadData()
+    }
 }
 
-extension CheckViewController: UITableViewDataSource {
+extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
@@ -146,11 +159,32 @@ extension CheckViewController: UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat(30)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        if (section == 1) {
+            let frame = tableView.frame
+            
+            let button = UIButton(frame:   CGRect(x: 5, y: 0, width: frame.size.width, height: 30))
+            button.setTitle("Add another", for: .normal)
+            button.setTitleColor(UIColor.black, for: .normal)
+            button.addTarget(self, action: #selector(self.addAnotherRow), for: .touchUpInside)
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: 30))  // create custom view
+            headerView.addSubview(button)   // add the button to the view
+            headerView.backgroundColor = UIColor.clear
+            return headerView
+        }
+        return nil
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TotalTableViewCell", for: indexPath) as! TotalTableViewCell
             if totalCheck != 0.0 {
-                cell.totalTextField.text = "\(totalCheck)"
+                cell.totalTextField.text = "$\(totalCheck)"
             }
             cell.delegate = self
             return cell
@@ -204,23 +238,27 @@ extension CheckViewController: SubmitTableViewCellDelegate {
         let alertController = UIAlertController.init(title: "Save", message: "Do you want to save this split?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Yes", style: .default, handler: {
             _ in
-            let nameAlert = UIAlertController.init(title: "Name", message: "Give a title to celebration.", preferredStyle: .alert)
-            nameAlert.addTextField(configurationHandler: { (textField) -> Void in
-                textField.placeholder = "Event Name"
-                textField.textAlignment = .center
-            })
-            let okAction = UIAlertAction(title: "Yes", style: .default, handler: {
-                _ in
-                let nameField = nameAlert.textFields![0] as UITextField
-                if let text = nameField.text, text != "" {
-                    self.saveDetailsToDB(title: text)
-                }
-            })
-            nameAlert.addAction(okAction)
-            
-            let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
-            nameAlert.addAction(cancelAction)
-            self.present(nameAlert, animated: true, completion: nil)
+            if let event = self.event {
+                self.saveDetailsToDB(title: event.title!)
+            } else {
+                let nameAlert = UIAlertController.init(title: "Name", message: "Give a title to celebration.", preferredStyle: .alert)
+                nameAlert.addTextField(configurationHandler: { (textField) -> Void in
+                    textField.placeholder = "Event Name"
+                    textField.textAlignment = .center
+                })
+                let okAction = UIAlertAction(title: "Yes", style: .default, handler: {
+                    _ in
+                    let nameField = nameAlert.textFields![0] as UITextField
+                    if let text = nameField.text, text != "" {
+                        self.saveDetailsToDB(title: text)
+                    }
+                })
+                nameAlert.addAction(okAction)
+                
+                let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+                nameAlert.addAction(cancelAction)
+                self.present(nameAlert, animated: true, completion: nil)
+            }
         })
         let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
         alertController.addAction(okAction)

@@ -45,8 +45,8 @@ class TotalTableViewCell: UITableViewCell {
     }
     
     @objc func textEntered(_ timer: Timer) {
-        if let text = totalTextField.text, text != "" {
-            delegate?.totalCheckEntered(value: Double(totalTextField.text!)!)
+        if let text = totalTextField.text?.replacingOccurrences(of: "$", with: ""), text != "" {
+            delegate?.totalCheckEntered(value: Double(text)!)
         }
     }
 }
