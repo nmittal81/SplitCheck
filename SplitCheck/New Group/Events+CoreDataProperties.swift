@@ -20,6 +20,7 @@ extension Events {
     @NSManaged public var title: String?
     @NSManaged public var amount: Double
     @NSManaged public var date: String?
+    @NSManaged public var location: String?
     @NSManaged public var number: Int16
     @NSManaged public var members: NSSet?
 

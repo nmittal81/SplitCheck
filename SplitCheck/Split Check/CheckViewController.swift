@@ -181,33 +181,17 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
         return CGFloat(30)
     }
     
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat(0)
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if (section == 1) {
-            let frame = tableView.frame
-            
-            let addButton = UIButton(frame:   CGRect(x: 15, y: 0, width: 100, height: 30))
-            addButton.setTitle("Add another", for: .normal)
-            addButton.setTitleColor(UIColor.black, for: .normal)
-            addButton.addTarget(self, action: #selector(self.addAnotherRow), for: .touchUpInside)
-            
-            let importContactsButton = UIButton(frame:   CGRect(x: 200, y: 0, width: 150, height: 30))
-            importContactsButton.setTitle("Import Contacts", for: .normal)
-            importContactsButton.setTitleColor(UIColor.black, for: .normal)
-            importContactsButton.addTarget(self, action: #selector(self.importContacts), for: .touchUpInside)
-            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: 30))  // create custom view
-            headerView.addSubview(addButton)   // add the button to the view
-            headerView.addSubview(importContactsButton)
-            headerView.backgroundColor = UIColor.clear
-            
-            let leftViewLeadingConstraint = NSLayoutConstraint(item: addButton, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal
-                , toItem: headerView, attribute: NSLayoutAttribute.leading, multiplier: 1, constant: 10)
-            
-            let rightViewTrailingConstraint = NSLayoutConstraint(item: importContactsButton, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal
-                , toItem: headerView, attribute: NSLayoutAttribute.trailing, multiplier: 1, constant: 10)
-            
-            NSLayoutConstraint.activate([leftViewLeadingConstraint, rightViewTrailingConstraint])
-            return headerView
+            let view = PersonHeaderView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
+            view.importButton.addTarget(self, action: #selector(self.importContacts), for: .touchUpInside)
+            view.addButton.addTarget(self, action: #selector(self.addAnotherRow), for: .touchUpInside)
+            return view
         }
         return nil
     }
