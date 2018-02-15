@@ -317,7 +317,9 @@ extension CheckViewController: CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
         var i = 0
         for member in memberArray {
-            member.fname = contacts[i].givenName
+            if i < contacts.count {
+                member.fname = contacts[i].givenName
+            }
             i += 1
         }
         tableView.reloadData()
