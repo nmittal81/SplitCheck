@@ -10,8 +10,13 @@ import UIKit
 
 protocol TotalTableViewCellDelegate {
     func totalCheckEntered(value: Double)
+    func nameOfEventEntered(value: String)
 }
 
+enum CellType {
+    case Name
+    case Total
+}
 class TotalTableViewCell: UITableViewCell {
 
     @IBOutlet weak var totalTextField: UITextField!
@@ -19,6 +24,7 @@ class TotalTableViewCell: UITableViewCell {
     var delegate: TotalTableViewCellDelegate?
     
     var textTimer: Timer?
+    var cellType: CellType = .Name
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,14 +45,15 @@ class TotalTableViewCell: UITableViewCell {
             textTimer?.invalidate()
             textTimer = nil
         }
-        
         // reschedule the search: in 1.0 second, call the searchForKeyword method on the new textfield content
         textTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(textEntered(_:)), userInfo: nil, repeats: false)
     }
     
     @objc func textEntered(_ timer: Timer) {
-        if let text = totalTextField.text?.replacingOccurrences(of: "$", with: ""), text != "" {
-            delegate?.totalCheckEntered(value: Double(text)!)
+        if cellType == .Total, let text = totalTextField.text?.replacingOccurrences(of: "$", with: ""), text != "", let doubleVal = Double(text) {
+            delegate?.totalCheckEntered(value: doubleVal)
+        } else if let text = totalTextField.text {
+            delegate?.nameOfEventEntered(value: text)
         }
     }
 }

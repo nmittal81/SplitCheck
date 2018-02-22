@@ -10,9 +10,6 @@ import UIKit
 import CoreData
 
 class MainViewController: UIViewController {
-    var numberOfPeople = 0
-
-    @IBOutlet weak var numberOfPeopleTextField: UITextField!
     @IBOutlet weak var tableView: UITableView!
     
     var dataPreviouslyStored = [Events]()
@@ -26,7 +23,6 @@ class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         selectedEvent = nil
-        numberOfPeopleTextField.text = "0"
         let fetchRequest:NSFetchRequest<Events> = Events.fetchRequest()
         do {
             dataPreviouslyStored = try DataBaseController.getContext().fetch(fetchRequest)
@@ -44,28 +40,16 @@ class MainViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    @IBAction func doneClicked(_ sender: Any) {
-        performSegue(withIdentifier: "CheckViewController", sender: self)
+    
+    @IBAction func backClicked(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "CheckViewController", let navController = segue.destination as? UINavigationController  {
-            let vc = navController.topViewController as! CheckViewController
+        if segue.identifier == "CheckViewController", let vc = segue.destination as? CheckViewController  {
             if let selectedEvent = selectedEvent {
                 vc.event = selectedEvent
-                vc.numberOfCells = Int(selectedEvent.number)
                 vc.memberArray = Array(selectedEvent.members!) as! [MemberOfEvent]
-            } else {
-                let totalNumber = Int(numberOfPeopleTextField.text!)!
-                vc.numberOfCells = totalNumber
-                let entity = NSEntityDescription.entity(forEntityName: "MemberOfEvent", in: DataBaseController.getContext())
-                var memberArray = [MemberOfEvent]()
-                for _ in 0...totalNumber - 1 {
-                    let member = MemberOfEvent(entity: entity!, insertInto: DataBaseController.getContext())
-                    memberArray.append(member)
-                }
-                vc.memberArray = memberArray
             }
         }
     }
@@ -73,15 +57,6 @@ class MainViewController: UIViewController {
     func removeEventFromDB(event: Events) {
         DataBaseController.getContext().delete(event)
         DataBaseController.saveContext()
-    }
-}
-
-extension MainViewController: UITextFieldDelegate {
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if let text = textField.text, text != "" {
-            self.numberOfPeople = Int(text)!
-        }
     }
 }
 

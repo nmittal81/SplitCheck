@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NhF-h7-F6T">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -19,45 +19,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hiz-Cj-vSq">
-                                <rect key="frame" x="20" y="141" width="335" height="30"/>
-                                <color key="backgroundColor" red="0.2666666667" green="0.44705882349999998" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Let's Start">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" red="0.2666666667" green="0.44705882349999998" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="doneClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GGI-87-QTM"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E5Y-6T-u0K">
-                                <rect key="frame" x="0.0" y="40" width="375" height="21"/>
-                                <string key="text">Enter the number of people you are celebrating with, and split the check. You can add what needs to be added to each person's tab and split the rest equally.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7uM-qb-fAq">
-                                <rect key="frame" x="172.5" y="91" width="30" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="6jW-JE-cgF"/>
-                                </connections>
-                            </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9D1-nJ-aHl">
-                                <rect key="frame" x="8" y="192" width="359" height="475"/>
+                                <rect key="frame" x="8" y="84" width="359" height="583"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PreviousDataCell" id="I0G-KU-L8y" customClass="PreviousDataTableViewCell" customModule="SplitCheck" customModuleProvider="target">
@@ -105,30 +68,28 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="hiz-Cj-vSq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="4PD-ja-r2e"/>
-                            <constraint firstItem="E5Y-6T-u0K" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="QXo-Kq-Xsi"/>
+                            <constraint firstItem="9D1-nJ-aHl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="Rqa-8n-C9E"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9D1-nJ-aHl" secondAttribute="trailing" constant="8" id="W9k-LA-FhR"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hiz-Cj-vSq" secondAttribute="trailing" constant="20" id="XkX-P2-IiQ"/>
                             <constraint firstItem="9D1-nJ-aHl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="fG2-S0-WfS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="9D1-nJ-aHl" secondAttribute="bottom" id="gAs-Sg-VcT"/>
-                            <constraint firstItem="9D1-nJ-aHl" firstAttribute="top" secondItem="hiz-Cj-vSq" secondAttribute="bottom" constant="21" id="hdD-7d-EYY"/>
-                            <constraint firstItem="7uM-qb-fAq" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="iCd-V2-fDt"/>
-                            <constraint firstItem="7uM-qb-fAq" firstAttribute="top" secondItem="E5Y-6T-u0K" secondAttribute="bottom" constant="30" id="jjE-hd-PDY"/>
-                            <constraint firstItem="E5Y-6T-u0K" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="lhF-O6-liL"/>
-                            <constraint firstItem="E5Y-6T-u0K" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qzG-b7-TY6"/>
-                            <constraint firstItem="hiz-Cj-vSq" firstAttribute="top" secondItem="7uM-qb-fAq" secondAttribute="bottom" constant="20" id="tcF-Lc-pC8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Syh-WH-gha">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="WPd-5f-Jhx">
+                            <connections>
+                                <action selector="backClicked:" destination="BYZ-38-t0r" id="rJv-PY-Lkn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="numberOfPeopleTextField" destination="7uM-qb-fAq" id="oTk-08-AsU"/>
                         <outlet property="tableView" destination="9D1-nJ-aHl" id="1PT-gt-0VS"/>
-                        <segue destination="NhF-h7-F6T" kind="show" identifier="CheckViewController" id="OMy-0K-e9q"/>
+                        <segue destination="kR5-BD-P5J" kind="show" identifier="CheckViewController" id="wUv-Uk-6Rn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2818" y="132"/>
+            <point key="canvasLocation" x="-2479.1999999999998" y="131.78410794602701"/>
         </scene>
         <!--Check View Controller-->
         <scene sceneID="GCm-aW-eoB">
@@ -149,7 +110,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="$" borderStyle="roundedRect" placeholder="Total Check" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tNW-0V-A2H">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Total Check" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tNW-0V-A2H">
                                                     <rect key="frame" x="10" y="8" width="355" height="28"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -294,9 +255,9 @@
                         <viewLayoutGuide key="safeArea" id="Psq-dU-cnN"/>
                     </view>
                     <navigationItem key="navigationItem" id="ViW-Gm-OAe">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="106-CR-uBq">
+                        <barButtonItem key="leftBarButtonItem" title="Splits" id="106-CR-uBq">
                             <connections>
-                                <action selector="backClicked:" destination="kR5-BD-P5J" id="keN-vg-UAb"/>
+                                <action selector="showPreviousSplits" destination="kR5-BD-P5J" id="Rh2-tc-dN8"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Share" id="bg7-GL-ccE">
@@ -307,11 +268,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="GGJ-4p-8It" id="t9o-mB-onb"/>
+                        <segue destination="Mc7-d7-5sG" kind="presentation" identifier="MainViewController" id="GmD-2D-QtX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="74y-26-RQv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="878" y="88"/>
+            <point key="canvasLocation" x="1216.8" y="87.706146926536732"/>
         </scene>
         <!--Split Check-->
         <scene sceneID="QgC-cf-FJQ">
@@ -329,7 +291,29 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V4R-bo-Z1j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-358" y="88"/>
+            <point key="canvasLocation" x="-20" y="87.706146926536732"/>
+        </scene>
+        <!--Previous Splits-->
+        <scene sceneID="8J1-hx-hcS">
+            <objects>
+                <navigationController title="Previous Splits" automaticallyAdjustsScrollViewInsets="NO" id="Mc7-d7-5sG" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gb5-QW-FSX">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="rGv-WD-gKc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fpV-9R-EMU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2819.1999999999998" y="131.33433283358323"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="rGv-WD-gKc"/>
+        <segue reference="wUv-Uk-6Rn"/>
+    </inferredMetricsTieBreakers>
 </document>

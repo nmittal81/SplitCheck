@@ -1,4 +1,4 @@
-//
+ //
 //  CheckViewController.swift
 //  SplitCheck
 //
@@ -13,8 +13,8 @@ import ContactsUI
 
 class CheckViewController: UIViewController {
 
-    var numberOfCells = 0
     var totalCheck = 0.0
+    var titleOfEvent = ""
     var memberArray = [MemberOfEvent]()
     @IBOutlet weak var tableView: UITableView!
     var event: Events?
@@ -36,7 +36,6 @@ class CheckViewController: UIViewController {
         if let event = event {
             totalCheck = event.amount
             if let members = event.members {
-                self.numberOfCells = members.count
                 tableView.reloadData()
             }
         }
@@ -58,14 +57,9 @@ class CheckViewController: UIViewController {
     }
     */
     
-    @IBAction func backClicked(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
     @IBAction func shareClicked(_ sender: UIBarButtonItem) {
         var textToShare = ""
-        for i in 0...(numberOfCells - 1) {
-            let member = memberArray[i]
+        for member in memberArray {
             textToShare += "\(member.fname)  \(member.total)\n"
         }
         
@@ -74,6 +68,10 @@ class CheckViewController: UIViewController {
         
         activityVC.popoverPresentationController?.sourceView = self.view
         self.present(activityVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func showPreviousSplits() {
+        performSegue(withIdentifier: "MainViewController", sender: self)
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
@@ -90,7 +88,7 @@ class CheckViewController: UIViewController {
         })
     }
     
-    func saveDetailsToDB(title: String) {
+    func saveDetailsToDB() {
         var newEvent: Events
         if let savedEvent = event {
             newEvent = savedEvent
@@ -99,7 +97,7 @@ class CheckViewController: UIViewController {
             newEvent = NSEntityDescription.insertNewObject(forEntityName: "Events", into: DataBaseController.getContext()) as! Events
         }
         newEvent.amount = self.totalCheck
-        newEvent.number = Int16(numberOfCells)
+        newEvent.number = Int16(memberArray.count)
         let formatter = DateFormatter()
         // initially set the format based on your datepicker date
         formatter.dateFormat = "MMM d, yyyy"
@@ -107,7 +105,7 @@ class CheckViewController: UIViewController {
         let myDateString = formatter.string(from: Date())
         
         newEvent.date = myDateString
-        newEvent.title = title
+        newEvent.title = titleOfEvent
         newEvent.members = NSSet(array: memberArray)
         DataBaseController.saveContext()
     }
@@ -117,23 +115,22 @@ class CheckViewController: UIViewController {
 extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch(section) {
-        case 0: return 1
-        case 1: return numberOfCells
+        case 2: return memberArray.count
         default: return 1
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch(section) {
-        case 0: return "Enter total amount of your check"
-        case 1: return "Please enter name, drinks tab and we will do the rest"
-        case 2: return "Calculate"
-        default: return ""
+        case 1: return "Enter total amount of your check"
+        case 2: return "Please enter name, drinks tab and we will do the rest"
+        case 3: return "Calculate"
+        default: return "Name the occasion"
         }
     }
     
@@ -147,7 +144,7 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        if (section == 1) {
+        if (section == 2) {
             let view = PersonHeaderView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
             view.delegate = self
             return view
@@ -158,10 +155,19 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TotalTableViewCell", for: indexPath) as! TotalTableViewCell
+            cell.totalTextField.keyboardType = .default
+            cell.totalTextField.placeholder = "NAME"
+            cell.cellType = .Name
+            cell.totalTextField.text = event?.title
+            cell.delegate = self
+            return cell
+        } else if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TotalTableViewCell", for: indexPath) as! TotalTableViewCell
             if totalCheck != 0.0 {
                 cell.totalTextField.text = "$\(totalCheck)"
             }
             cell.delegate = self
+            cell.cellType = .Total
             return cell
         } else if indexPath.section == tableView.numberOfSections - 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitTableViewCell", for: indexPath) as! SubmitTableViewCell
@@ -183,8 +189,6 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if (editingStyle == UITableViewCellEditingStyle.delete) {
-            //TODO
-            numberOfCells -= 1
             memberArray.remove(at: indexPath.row)
             tableView.reloadData()
         }
@@ -194,6 +198,10 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
 extension CheckViewController: TotalTableViewCellDelegate {
     func totalCheckEntered(value: Double) {
         self.totalCheck = value
+    }
+    
+    func nameOfEventEntered(value: String) {
+        titleOfEvent = value
     }
 }
 
@@ -217,37 +225,18 @@ extension CheckViewController: SubmitTableViewCellDelegate {
             return
         }
         var sum = 0.0
-        for i in 0...numberOfCells - 1 {
-            let member = memberArray[i]
+        for member in memberArray {
             sum += member.drinks
         }
-        let foodAmount = (totalCheck - sum)/Double(numberOfCells)
+        let foodAmount = (totalCheck - sum)/Double(memberArray.count)
         let userInfo = ["Amount": foodAmount]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "TotalCalculated"), object: nil, userInfo: userInfo)
         let alertController = UIAlertController.init(title: "Save", message: "Do you want to save this split?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Yes", style: .default, handler: {
             _ in
-            if let event = self.event {
-                self.saveDetailsToDB(title: event.title!)
-            } else {
-                let nameAlert = UIAlertController.init(title: "Name", message: "Give a title to celebration.", preferredStyle: .alert)
-                nameAlert.addTextField(configurationHandler: { (textField) -> Void in
-                    textField.placeholder = "Event Name"
-                    textField.textAlignment = .center
-                })
-                let okAction = UIAlertAction(title: "Yes", style: .default, handler: {
-                    _ in
-                    let nameField = nameAlert.textFields![0] as UITextField
-                    if let text = nameField.text, text != "" {
-                        self.saveDetailsToDB(title: text)
-                    }
-                })
-                nameAlert.addAction(okAction)
-                
-                let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
-                nameAlert.addAction(cancelAction)
-                self.present(nameAlert, animated: true, completion: nil)
-            }
+//            if let _ = self.event {
+                self.saveDetailsToDB()
+//            }
         })
         let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
         alertController.addAction(okAction)
@@ -258,12 +247,12 @@ extension CheckViewController: SubmitTableViewCellDelegate {
 
 extension CheckViewController: CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
-        var i = 0
-        for member in memberArray {
-            if i < contacts.count {
-                member.fname = contacts[i].givenName
-            }
-            i += 1
+        for contact in contacts {
+            let entity = NSEntityDescription.entity(forEntityName: "MemberOfEvent", in: DataBaseController.getContext())
+            let member = MemberOfEvent(entity: entity!, insertInto: DataBaseController.getContext())
+            member.fname = contact.givenName
+            memberArray.append(member)
+            tableView.reloadData()
         }
         tableView.reloadData()
     }
@@ -275,7 +264,6 @@ extension CheckViewController: CNContactPickerDelegate {
 
 extension CheckViewController: PersonHeaderViewDelegate {
     func addPerson() {
-        numberOfCells += 1
         let entity = NSEntityDescription.entity(forEntityName: "MemberOfEvent", in: DataBaseController.getContext())
         let member = MemberOfEvent(entity: entity!, insertInto: DataBaseController.getContext())
         memberArray.append(member)
@@ -286,31 +274,11 @@ extension CheckViewController: PersonHeaderViewDelegate {
         
         ContactsHandler.sharedInstance.requestForAccess{(accessGranted) -> Void in
             if accessGranted {
-                //                let store = CNContactStore()
-                
                 let contactPicker = CNContactPickerViewController()
                 contactPicker.delegate = self;
                 contactPicker.displayedPropertyKeys = [CNContactPhoneNumbersKey]
                 
                 self.present(contactPicker, animated: true, completion: nil)
-                
-                //                let keysToFetch = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName), CNContactPhoneNumbersKey] as [Any]
-                //                let request = CNContactFetchRequest(keysToFetch: keysToFetch as! [CNKeyDescriptor])
-                //                var cnContacts = [CNContact]()
-                //
-                //                do {
-                //                    try store.enumerateContacts(with: request){
-                //                        (contact, cursor) -> Void in
-                //                        cnContacts.append(contact)
-                //                    }
-                //                } catch let error {
-                //                    NSLog("Fetch contact error: \(error)")
-                //                }
-                //
-                //                for contact in cnContacts {
-                //                    let fullName = CNContactFormatter.string(from: contact, style: .fullName) ?? "No Name"
-                //                    print(fullName)
-                //                }
             }
         }
     }
