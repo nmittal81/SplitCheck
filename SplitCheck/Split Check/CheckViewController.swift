@@ -165,8 +165,11 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TotalTableViewCell", for: indexPath) as! TotalTableViewCell
             if totalCheck != 0.0 {
                 cell.totalTextField.text = "$\(totalCheck)"
+            } else {
+                cell.totalTextField.text = ""
             }
             cell.delegate = self
+            cell.totalTextField.keyboardType = .decimalPad
             cell.cellType = .Total
             return cell
         } else if indexPath.section == tableView.numberOfSections - 1 {
@@ -231,7 +234,9 @@ extension CheckViewController: SubmitTableViewCellDelegate {
     }
     
     func clear() {
-        
+        totalCheck = 0.0
+        titleOfEvent = ""
+        tableView.reloadData()
     }
 }
 

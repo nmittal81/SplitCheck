@@ -19,6 +19,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No previous splits yet, split and check us back." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nrf-KT-uTC">
+                                <rect key="frame" x="100" y="164" width="175" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9D1-nJ-aHl">
                                 <rect key="frame" x="8" y="84" width="359" height="583"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -70,8 +76,11 @@
                         <constraints>
                             <constraint firstItem="9D1-nJ-aHl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="Rqa-8n-C9E"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9D1-nJ-aHl" secondAttribute="trailing" constant="8" id="W9k-LA-FhR"/>
+                            <constraint firstItem="nrf-KT-uTC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="WTP-hp-B6f"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nrf-KT-uTC" secondAttribute="trailing" constant="100" id="XPT-w4-be8"/>
                             <constraint firstItem="9D1-nJ-aHl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="fG2-S0-WfS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="9D1-nJ-aHl" secondAttribute="bottom" id="gAs-Sg-VcT"/>
+                            <constraint firstItem="nrf-KT-uTC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="o2j-dD-MlM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -83,6 +92,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="noEventsLabel" destination="nrf-KT-uTC" id="fZq-uz-WYM"/>
                         <outlet property="tableView" destination="9D1-nJ-aHl" id="1PT-gt-0VS"/>
                         <segue destination="kR5-BD-P5J" kind="show" identifier="CheckViewController" id="wUv-Uk-6Rn"/>
                     </connections>
@@ -204,15 +214,15 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SubmitTableViewCell" id="HL6-Ah-zkd" customClass="SubmitTableViewCell" customModule="SplitCheck" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="143.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HL6-Ah-zkd" id="SD4-xW-icT">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HL6-Ah-zkd" id="SD4-xW-icT">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmF-8G-B36">
-                                                    <rect key="frame" x="20" y="8" width="100" height="28"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmF-8G-B36">
+                                                    <rect key="frame" x="20" y="8" width="120" height="30"/>
                                                     <color key="backgroundColor" red="0.2666666667" green="0.44705882349999998" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="K6S-aL-DvF"/>
+                                                        <constraint firstAttribute="width" constant="120" id="g7A-sa-BJP"/>
                                                     </constraints>
                                                     <state key="normal" title="Go">
                                                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -232,11 +242,11 @@
                                                         <action selector="submitClicked:" destination="HL6-Ah-zkd" eventType="touchUpInside" id="QzR-qg-ZN6"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uLB-b0-cbg">
-                                                    <rect key="frame" x="200" y="8" width="100" height="28"/>
-                                                    <color key="backgroundColor" red="0.2666666667" green="0.44705882349999998" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uLB-b0-cbg">
+                                                    <rect key="frame" x="235" y="6" width="120" height="30"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="yhS-N9-zPQ"/>
+                                                        <constraint firstAttribute="width" constant="120" id="h81-sj-YNr"/>
                                                     </constraints>
                                                     <state key="normal" title="Clear">
                                                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -258,13 +268,12 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="zmF-8G-B36" secondAttribute="bottom" constant="8" id="D72-Uy-lmf"/>
-                                                <constraint firstItem="zmF-8G-B36" firstAttribute="trailing" secondItem="uLB-b0-cbg" secondAttribute="leading" constant="50" id="Euu-MN-gPp"/>
-                                                <constraint firstAttribute="trailing" secondItem="uLB-b0-cbg" secondAttribute="trailing" constant="20" id="G0a-LJ-KCa"/>
-                                                <constraint firstItem="zmF-8G-B36" firstAttribute="top" secondItem="SD4-xW-icT" secondAttribute="top" constant="8" id="VOt-Sr-hpC"/>
-                                                <constraint firstItem="zmF-8G-B36" firstAttribute="leading" secondItem="SD4-xW-icT" secondAttribute="leading" constant="20" id="aFn-EK-Exc"/>
-                                                <constraint firstAttribute="bottom" secondItem="uLB-b0-cbg" secondAttribute="bottom" constant="8" id="fOv-ah-48V"/>
-                                                <constraint firstItem="uLB-b0-cbg" firstAttribute="top" secondItem="SD4-xW-icT" secondAttribute="top" constant="8" id="jps-fL-mtf"/>
+                                                <constraint firstItem="zmF-8G-B36" firstAttribute="leading" secondItem="SD4-xW-icT" secondAttribute="leading" constant="20" id="1TO-kw-bqn"/>
+                                                <constraint firstAttribute="bottom" secondItem="zmF-8G-B36" secondAttribute="bottom" constant="6" id="22J-RA-ifo"/>
+                                                <constraint firstItem="uLB-b0-cbg" firstAttribute="top" secondItem="SD4-xW-icT" secondAttribute="top" constant="6" id="91E-eZ-mhL"/>
+                                                <constraint firstAttribute="bottom" secondItem="uLB-b0-cbg" secondAttribute="bottom" constant="8" id="QE4-Jv-iV5"/>
+                                                <constraint firstAttribute="trailing" secondItem="uLB-b0-cbg" secondAttribute="trailing" constant="20" id="Ut2-HE-c8r"/>
+                                                <constraint firstItem="zmF-8G-B36" firstAttribute="top" secondItem="SD4-xW-icT" secondAttribute="top" constant="8" id="XFg-wR-tvV"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -342,11 +351,11 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fpV-9R-EMU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2819.1999999999998" y="131.33433283358323"/>
+            <point key="canvasLocation" x="-3534" y="161"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="GmD-2D-QtX"/>
+        <segue reference="rGv-WD-gKc"/>
         <segue reference="wUv-Uk-6Rn"/>
     </inferredMetricsTieBreakers>
 </document>

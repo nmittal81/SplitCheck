@@ -14,6 +14,8 @@ class MainViewController: UIViewController {
     
     var dataPreviouslyStored = [Events]()
     var selectedEvent: Events?
+    @IBOutlet weak var noEventsLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +31,7 @@ class MainViewController: UIViewController {
             if dataPreviouslyStored.count == 0 {
                 tableView.isHidden = true
             } else {
+                noEventsLabel.isHidden = true
                 tableView.reloadData()
             }
         } catch {
