@@ -11,7 +11,6 @@ import UIKit
 protocol PersonTableViewCellDelegate {
     func drinkCheckEntered(value: Double, member: MemberOfEvent)
     func nameEntered(value: String, member: MemberOfEvent)
-    func totalCalculated(value: Double, member: MemberOfEvent)
 }
 
 class PersonTableViewCell: UITableViewCell {
@@ -60,9 +59,10 @@ class PersonTableViewCell: UITableViewCell {
         if let userInfo = notification.userInfo
         , let amount = userInfo["Amount"] as? Double {
             foodTextField.text = "$\(amount.rounded(toPlaces: 1))"
+            member?.food = amount.rounded(toPlaces: 1)
             let total = amount + (member?.drinks)!
             totalLabelField.text = "$\(total.rounded(toPlaces: 1))"
-            delegate?.totalCalculated(value: total, member: member!)
+            member?.total = total.rounded(toPlaces: 1)
         }
     }
     

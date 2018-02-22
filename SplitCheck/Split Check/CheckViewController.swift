@@ -213,10 +213,6 @@ extension CheckViewController: PersonTableViewCellDelegate {
     func nameEntered(value: String, member: MemberOfEvent) {
         member.fname = value
     }
-    
-    func totalCalculated(value: Double,  member: MemberOfEvent) {
-        member.total = value
-    }
 }
 
 extension CheckViewController: SubmitTableViewCellDelegate {
@@ -232,6 +228,10 @@ extension CheckViewController: SubmitTableViewCellDelegate {
         let userInfo = ["Amount": foodAmount]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "TotalCalculated"), object: nil, userInfo: userInfo)
         self.saveDetailsToDB()
+    }
+    
+    func clear() {
+        
     }
 }
 

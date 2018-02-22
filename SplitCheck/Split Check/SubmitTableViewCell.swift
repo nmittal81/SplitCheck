@@ -10,6 +10,7 @@ import UIKit
 
 protocol SubmitTableViewCellDelegate {
     func calculateFoodSplit()
+    func clear()
 }
 
 class SubmitTableViewCell: UITableViewCell {
@@ -30,5 +31,9 @@ class SubmitTableViewCell: UITableViewCell {
 
     @IBAction func submitClicked(_ sender: UIButton) {
         delegate?.calculateFoodSplit()
+    }
+    
+    @IBAction func clearClicked(_ sender: UIButton) {
+        delegate?.clear()
     }
 }

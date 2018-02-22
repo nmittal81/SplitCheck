@@ -139,7 +139,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nCf-he-OtO">
-                                                    <rect key="frame" x="15" y="8" width="164" height="28"/>
+                                                    <rect key="frame" x="15" y="8" width="100" height="28"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="100" id="vIz-u8-Rat"/>
+                                                    </constraints>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" keyboardType="alphabet" returnKeyType="next"/>
@@ -148,7 +151,7 @@
                                                     </connections>
                                                 </textField>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="$" borderStyle="roundedRect" placeholder="Drinks" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gio-2K-2Wl">
-                                                    <rect key="frame" x="189" y="8" width="60" height="28"/>
+                                                    <rect key="frame" x="125" y="8" width="60" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="60" id="wO7-cp-5xm"/>
                                                     </constraints>
@@ -160,7 +163,7 @@
                                                     </connections>
                                                 </textField>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="$" borderStyle="roundedRect" placeholder="Food" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CFY-yz-cPC">
-                                                    <rect key="frame" x="269" y="8" width="60" height="28"/>
+                                                    <rect key="frame" x="205" y="8" width="60" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="60" id="URc-Ln-0gA"/>
                                                     </constraints>
@@ -169,7 +172,7 @@
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KQJ-vE-9vX">
-                                                    <rect key="frame" x="339" y="19" width="11" height="6"/>
+                                                    <rect key="frame" x="275" y="19" width="75" height="6"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -205,8 +208,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmF-8G-B36">
-                                                    <rect key="frame" x="20" y="8" width="335" height="28"/>
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmF-8G-B36">
+                                                    <rect key="frame" x="20" y="8" width="150" height="28"/>
                                                     <color key="backgroundColor" red="0.2666666667" green="0.44705882349999998" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
                                                     <state key="normal" title="Go">
                                                         <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -226,12 +229,36 @@
                                                         <action selector="submitClicked:" destination="HL6-Ah-zkd" eventType="touchUpInside" id="QzR-qg-ZN6"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uLB-b0-cbg">
+                                                    <rect key="frame" x="177.5" y="8" width="150" height="28"/>
+                                                    <color key="backgroundColor" red="0.2666666667" green="0.44705882349999998" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <state key="normal" title="Clear">
+                                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" red="0.2666666667" green="0.44705882349999998" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="clearClicked:" destination="HL6-Ah-zkd" eventType="touchUpInside" id="zVb-4a-jFX"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="zmF-8G-B36" secondAttribute="bottom" constant="8" id="D72-Uy-lmf"/>
+                                                <constraint firstItem="zmF-8G-B36" firstAttribute="trailing" secondItem="uLB-b0-cbg" secondAttribute="leading" constant="20" id="Euu-MN-gPp"/>
+                                                <constraint firstAttribute="trailing" secondItem="uLB-b0-cbg" secondAttribute="trailing" constant="20" id="G0a-LJ-KCa"/>
                                                 <constraint firstItem="zmF-8G-B36" firstAttribute="top" secondItem="SD4-xW-icT" secondAttribute="top" constant="8" id="VOt-Sr-hpC"/>
                                                 <constraint firstItem="zmF-8G-B36" firstAttribute="leading" secondItem="SD4-xW-icT" secondAttribute="leading" constant="20" id="aFn-EK-Exc"/>
-                                                <constraint firstAttribute="trailing" secondItem="zmF-8G-B36" secondAttribute="trailing" constant="20" id="cJc-Kr-qfr"/>
+                                                <constraint firstAttribute="bottom" secondItem="uLB-b0-cbg" secondAttribute="bottom" constant="8" id="fOv-ah-48V"/>
+                                                <constraint firstItem="uLB-b0-cbg" firstAttribute="top" secondItem="SD4-xW-icT" secondAttribute="top" constant="8" id="jps-fL-mtf"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -313,7 +340,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rGv-WD-gKc"/>
+        <segue reference="GmD-2D-QtX"/>
         <segue reference="wUv-Uk-6Rn"/>
     </inferredMetricsTieBreakers>
 </document>
