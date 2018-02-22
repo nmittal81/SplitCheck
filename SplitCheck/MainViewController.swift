@@ -70,10 +70,6 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         return dataPreviouslyStored.count
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Previously Stored Events"
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PreviousDataCell", for: indexPath) as! PreviousDataTableViewCell
         let event = dataPreviouslyStored[indexPath.row]

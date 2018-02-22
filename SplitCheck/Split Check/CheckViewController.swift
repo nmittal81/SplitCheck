@@ -231,17 +231,7 @@ extension CheckViewController: SubmitTableViewCellDelegate {
         let foodAmount = (totalCheck - sum)/Double(memberArray.count)
         let userInfo = ["Amount": foodAmount]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "TotalCalculated"), object: nil, userInfo: userInfo)
-        let alertController = UIAlertController.init(title: "Save", message: "Do you want to save this split?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Yes", style: .default, handler: {
-            _ in
-//            if let _ = self.event {
-                self.saveDetailsToDB()
-//            }
-        })
-        let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
-        alertController.addAction(okAction)
-        alertController.addAction(cancelAction)
-        self.present(alertController, animated: true, completion: nil)
+        self.saveDetailsToDB()
     }
 }
 

@@ -44,9 +44,15 @@ class PersonTableViewCell: UITableViewCell {
     func updateView() {
         if let member = member {
             nameTextField.text = member.fname
-            drinksTextField.text = "$\(member.drinks)"
-            totalLabelField.text = "$\(member.total)"
-            foodTextField.text = "$\(member.food)"
+            if member.drinks != 0 {
+                drinksTextField.text = "$\(member.drinks)"
+            }
+            if member.total != 0 {
+                totalLabelField.text = "$\(member.total)"
+            }
+            if member.food != 0 {
+                foodTextField.text = "$\(member.food)"
+            }
         }
     }
     
