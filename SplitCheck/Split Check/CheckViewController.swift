@@ -112,46 +112,6 @@ class CheckViewController: UIViewController {
         DataBaseController.saveContext()
     }
 
-    @objc func addAnotherRow(sender: UIButton) {
-        numberOfCells += 1
-        let entity = NSEntityDescription.entity(forEntityName: "MemberOfEvent", in: DataBaseController.getContext())
-        let member = MemberOfEvent(entity: entity!, insertInto: DataBaseController.getContext())
-        memberArray.append(member)
-        tableView.reloadData()
-    }
-    
-    @objc func importContacts(sender: UIButton) {
-        
-        ContactsHandler.sharedInstance.requestForAccess{(accessGranted) -> Void in
-            if accessGranted {
-//                let store = CNContactStore()
-                
-                let contactPicker = CNContactPickerViewController()
-                contactPicker.delegate = self;
-                contactPicker.displayedPropertyKeys = [CNContactPhoneNumbersKey]
-                
-                self.present(contactPicker, animated: true, completion: nil)
-                
-//                let keysToFetch = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName), CNContactPhoneNumbersKey] as [Any]
-//                let request = CNContactFetchRequest(keysToFetch: keysToFetch as! [CNKeyDescriptor])
-//                var cnContacts = [CNContact]()
-//
-//                do {
-//                    try store.enumerateContacts(with: request){
-//                        (contact, cursor) -> Void in
-//                        cnContacts.append(contact)
-//                    }
-//                } catch let error {
-//                    NSLog("Fetch contact error: \(error)")
-//                }
-//
-//                for contact in cnContacts {
-//                    let fullName = CNContactFormatter.string(from: contact, style: .fullName) ?? "No Name"
-//                    print(fullName)
-//                }
-            }
-        }
-    }
 }
 
 extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
@@ -189,8 +149,7 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
         
         if (section == 1) {
             let view = PersonHeaderView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
-            view.importButton.addTarget(self, action: #selector(self.importContacts), for: .touchUpInside)
-            view.addButton.addTarget(self, action: #selector(self.addAnotherRow), for: .touchUpInside)
+            view.delegate = self
             return view
         }
         return nil
@@ -311,5 +270,48 @@ extension CheckViewController: CNContactPickerDelegate {
     
     func contactPickerDidCancel(_ picker: CNContactPickerViewController) {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension CheckViewController: PersonHeaderViewDelegate {
+    func addPerson() {
+        numberOfCells += 1
+        let entity = NSEntityDescription.entity(forEntityName: "MemberOfEvent", in: DataBaseController.getContext())
+        let member = MemberOfEvent(entity: entity!, insertInto: DataBaseController.getContext())
+        memberArray.append(member)
+        tableView.reloadData()
+    }
+    
+    func importContacts() {
+        
+        ContactsHandler.sharedInstance.requestForAccess{(accessGranted) -> Void in
+            if accessGranted {
+                //                let store = CNContactStore()
+                
+                let contactPicker = CNContactPickerViewController()
+                contactPicker.delegate = self;
+                contactPicker.displayedPropertyKeys = [CNContactPhoneNumbersKey]
+                
+                self.present(contactPicker, animated: true, completion: nil)
+                
+                //                let keysToFetch = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName), CNContactPhoneNumbersKey] as [Any]
+                //                let request = CNContactFetchRequest(keysToFetch: keysToFetch as! [CNKeyDescriptor])
+                //                var cnContacts = [CNContact]()
+                //
+                //                do {
+                //                    try store.enumerateContacts(with: request){
+                //                        (contact, cursor) -> Void in
+                //                        cnContacts.append(contact)
+                //                    }
+                //                } catch let error {
+                //                    NSLog("Fetch contact error: \(error)")
+                //                }
+                //
+                //                for contact in cnContacts {
+                //                    let fullName = CNContactFormatter.string(from: contact, style: .fullName) ?? "No Name"
+                //                    print(fullName)
+                //                }
+            }
+        }
     }
 }

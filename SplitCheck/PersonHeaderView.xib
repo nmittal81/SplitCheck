@@ -23,19 +23,25 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RQg-jg-LZS">
-                    <rect key="frame" x="15" y="5" width="67" height="30"/>
+                    <rect key="frame" x="15" y="5" width="67" height="657"/>
                     <state key="normal" title="Add more"/>
+                    <connections>
+                        <action selector="addPerson:" destination="-1" eventType="touchUpInside" id="iyO-aM-Yhz"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y3T-y8-5Tk">
-                    <rect key="frame" x="212" y="5" width="148" height="30"/>
+                    <rect key="frame" x="212" y="5" width="148" height="657"/>
                     <state key="normal" title="Import from Contacts"/>
+                    <connections>
+                        <action selector="importContacts:" destination="-1" eventType="touchUpInside" id="gmk-3j-FW7"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="RQg-jg-LZS" secondAttribute="bottom" constant="632" id="2Je-26-0g2"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="RQg-jg-LZS" secondAttribute="bottom" constant="5" id="2Je-26-0g2"/>
                 <constraint firstAttribute="trailing" secondItem="Y3T-y8-5Tk" secondAttribute="trailing" constant="15" id="HR8-TY-mMA"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Y3T-y8-5Tk" secondAttribute="bottom" constant="632" id="UbE-QC-QgG"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Y3T-y8-5Tk" secondAttribute="bottom" constant="5" id="UbE-QC-QgG"/>
                 <constraint firstItem="RQg-jg-LZS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="k8j-bF-O1A"/>
                 <constraint firstItem="Y3T-y8-5Tk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="mf4-oo-39b"/>
                 <constraint firstItem="RQg-jg-LZS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="tXJ-Zl-VoY"/>

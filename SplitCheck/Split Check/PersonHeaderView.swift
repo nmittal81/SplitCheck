@@ -8,10 +8,17 @@
 
 import UIKit
 
+protocol PersonHeaderViewDelegate {
+    func addPerson()
+    func importContacts()
+}
+
 class PersonHeaderView: UIView {
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var importButton: UIButton!
+    
+    var delegate: PersonHeaderViewDelegate?
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -35,6 +42,14 @@ class PersonHeaderView: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    }
+    
+    @IBAction func addPerson(_ sender: UIButton) {
+        delegate?.addPerson()
+    }
+    
+    @IBAction func importContacts(_ sender: UIButton) {
+        delegate?.importContacts()
     }
 
 }
