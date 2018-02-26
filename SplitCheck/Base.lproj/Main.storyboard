@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Main View Controller-->
+        <!--Splits-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="SplitCheck" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Splits" id="BYZ-38-t0r" customClass="MainViewController" customModule="SplitCheck" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -84,7 +84,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Syh-WH-gha">
+                    <navigationItem key="navigationItem" title="Splits" id="Syh-WH-gha">
                         <barButtonItem key="leftBarButtonItem" title="Back" id="WPd-5f-Jhx">
                             <connections>
                                 <action selector="backClicked:" destination="BYZ-38-t0r" id="rJv-PY-Lkn"/>
@@ -355,7 +355,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="GmD-2D-QtX"/>
+        <segue reference="rGv-WD-gKc"/>
         <segue reference="wUv-Uk-6Rn"/>
     </inferredMetricsTieBreakers>
 </document>

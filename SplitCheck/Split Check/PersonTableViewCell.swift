@@ -83,12 +83,14 @@ class PersonTableViewCell: UITableViewCell {
     
     @objc func textEnteredForDrinks(_ timer: Timer) {
         if let text = drinksTextField.text?.replacingOccurrences(of: "$", with: ""), let val =  Double(text) {
+            drinksTextField.resignFirstResponder()
             delegate?.drinkCheckEntered(value: val, member: member!)
         }
     }
     
     @objc func textEnteredForName(_ timer: Timer) {
         if let text = nameTextField.text, text != "" {
+            nameTextField.resignFirstResponder()
             delegate?.nameEntered(value: text, member: member!)
         }
     }
