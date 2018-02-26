@@ -186,12 +186,15 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        if (indexPath.section == 2) {
+            return true
+        }
+        return false
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        if (editingStyle == UITableViewCellEditingStyle.delete) {
+        if ((indexPath.section == 2) && editingStyle == UITableViewCellEditingStyle.delete) {
             memberArray.remove(at: indexPath.row)
             tableView.reloadData()
         }
@@ -220,6 +223,7 @@ extension CheckViewController: PersonTableViewCellDelegate {
 
 extension CheckViewController: SubmitTableViewCellDelegate {
     func calculateFoodSplit() {
+        dismissKeyboard()
         if totalCheck == 0 {
             return
         }

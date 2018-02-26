@@ -17,7 +17,7 @@ enum CellType {
     case Name
     case Total
 }
-class TotalTableViewCell: UITableViewCell {
+class TotalTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var totalTextField: UITextField!
     
@@ -55,5 +55,10 @@ class TotalTableViewCell: UITableViewCell {
         } else if let text = totalTextField.text {
             delegate?.nameOfEventEntered(value: text)
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
