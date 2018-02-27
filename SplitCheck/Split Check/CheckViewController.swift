@@ -158,7 +158,13 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
             cell.totalTextField.keyboardType = .default
             cell.totalTextField.placeholder = "NAME"
             cell.cellType = .Name
-            cell.totalTextField.text = event?.title
+            if titleOfEvent != "" {
+                cell.totalTextField.text = titleOfEvent
+            } else if let event = event {
+                cell.totalTextField.text = event.title
+            } else {
+                cell.totalTextField.text = ""
+            }
             cell.delegate = self
             return cell
         } else if indexPath.section == 1 {
@@ -207,7 +213,7 @@ extension CheckViewController: TotalTableViewCellDelegate {
     }
     
     func nameOfEventEntered(value: String) {
-        titleOfEvent = value
+        self.titleOfEvent = value
     }
 }
 
@@ -238,6 +244,9 @@ extension CheckViewController: SubmitTableViewCellDelegate {
     }
     
     func clear() {
+        self.event = nil
+        self.memberArray.removeAll()
+        self.memberArray = [MemberOfEvent]()
         totalCheck = 0.0
         titleOfEvent = ""
         tableView.reloadData()
@@ -250,6 +259,9 @@ extension CheckViewController: CNContactPickerDelegate {
             let entity = NSEntityDescription.entity(forEntityName: "MemberOfEvent", in: DataBaseController.getContext())
             let member = MemberOfEvent(entity: entity!, insertInto: DataBaseController.getContext())
             member.fname = contact.givenName
+            member.drinks = 0.0
+            member.food = 0.0
+            member.total = 0.0
             memberArray.append(member)
             tableView.reloadData()
         }

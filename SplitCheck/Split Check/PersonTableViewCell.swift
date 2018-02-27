@@ -45,12 +45,18 @@ class PersonTableViewCell: UITableViewCell {
             nameTextField.text = member.fname
             if member.drinks != 0 {
                 drinksTextField.text = "$\(member.drinks)"
+            } else {
+                drinksTextField.text = ""
             }
             if member.total != 0 {
                 totalLabelField.text = "$\(member.total)"
+            } else {
+                totalLabelField.text = ""
             }
             if member.food != 0 {
                 foodTextField.text = "$\(member.food)"
+            } else {
+                foodTextField.text = ""
             }
         }
     }
