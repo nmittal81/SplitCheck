@@ -51,7 +51,6 @@ class TotalTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     @objc func textEntered(_ timer: Timer) {
         if cellType == .Total, let text = totalTextField.text?.replacingOccurrences(of: "$", with: ""), text != "", let doubleVal = Double(text) {
-            totalTextField.resignFirstResponder()
             delegate?.totalCheckEntered(value: doubleVal)
         } else if let text = totalTextField.text {
             delegate?.nameOfEventEntered(value: text)

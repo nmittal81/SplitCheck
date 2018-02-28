@@ -35,10 +35,13 @@ class CheckViewController: UIViewController {
         
         if let event = event {
             totalCheck = event.amount
-            if let members = event.members {
+            if let _ = event.members {
                 tableView.reloadData()
             }
         }
+        
+        let dismissKeyboardTap = UITapGestureRecognizer(target: self, action: #selector(CheckViewController.dismissKeyboardView))
+        tableView.addGestureRecognizer(dismissKeyboardTap)
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,6 +50,9 @@ class CheckViewController: UIViewController {
     }
     
 
+    @objc func dismissKeyboardView() {
+        view.endEditing(true)
+    }
     /*
     // MARK: - Navigation
 
@@ -107,6 +113,7 @@ class CheckViewController: UIViewController {
         newEvent.date = myDateString
         newEvent.title = titleOfEvent
         newEvent.members = NSSet(array: memberArray)
+        self.event = newEvent
         DataBaseController.saveContext()
     }
 
