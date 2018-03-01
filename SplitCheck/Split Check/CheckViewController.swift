@@ -11,17 +11,23 @@ import CoreData
 import Contacts
 import ContactsUI
 
+let kIntroViewShown = "IntroViewShown"
+ 
 class CheckViewController: UIViewController {
 
     var totalCheck = 0.0
     var titleOfEvent = ""
     var memberArray = [MemberOfEvent]()
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var introView: UIView!
     var event: Events?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        if UserDefaults.standard.object(forKey: kIntroViewShown) == nil {
+            tableView.isHidden = true
+        }
         // Do any additional setup after loading the view.
         
         NotificationCenter.default.addObserver(self,
@@ -49,6 +55,11 @@ class CheckViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func closeIntroView(_ sender: Any) {
+        introView.isHidden = true
+        tableView.isHidden = false
+        UserDefaults.standard.set(true, forKey: kIntroViewShown)
+    }
 
     @objc func dismissKeyboardView() {
         view.endEditing(true)
@@ -64,6 +75,9 @@ class CheckViewController: UIViewController {
     */
     
     @IBAction func shareClicked(_ sender: UIBarButtonItem) {
+        if introView.isHidden == false {
+            return
+        }
         var textToShare = ""
         for member in memberArray {
             textToShare += "\(member.fname)  \(member.total)\n"
@@ -77,6 +91,9 @@ class CheckViewController: UIViewController {
     }
     
     @IBAction func showPreviousSplits() {
+        if introView.isHidden == false {
+            return
+        }
         performSegue(withIdentifier: "MainViewController", sender: self)
     }
     

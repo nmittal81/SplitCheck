@@ -10,6 +10,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue-Bold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Splits-->
         <scene sceneID="tne-QT-ifu">
@@ -109,6 +114,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gzL-MM-NYc">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fcr-Vz-FsT">
+                                        <rect key="frame" x="100" y="540" width="175" height="33"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                        <state key="normal" title="Continue"/>
+                                        <connections>
+                                            <action selector="closeIntroView:" destination="kR5-BD-P5J" eventType="touchUpInside" id="cQH-Zk-ySP"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tDc-8O-dRE">
+                                        <rect key="frame" x="10" y="100" width="355" height="403"/>
+                                        <string key="text">Enter the occasion you are celebrating, your total check amount, add the people attending the event from either your contact book or manually, add each individual's drinks and then we will calculate each person's share.</string>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="tDc-8O-dRE" secondAttribute="bottom" constant="100" id="3TP-Tm-A9g"/>
+                                    <constraint firstAttribute="trailing" secondItem="fcr-Vz-FsT" secondAttribute="trailing" constant="100" id="jxt-9y-WPv"/>
+                                    <constraint firstItem="tDc-8O-dRE" firstAttribute="leading" secondItem="gzL-MM-NYc" secondAttribute="leading" constant="10" id="lSv-hI-egW"/>
+                                    <constraint firstItem="tDc-8O-dRE" firstAttribute="top" secondItem="gzL-MM-NYc" secondAttribute="top" constant="100" id="uzD-TX-wIQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="tDc-8O-dRE" secondAttribute="trailing" constant="10" id="wLU-2z-pew"/>
+                                    <constraint firstItem="fcr-Vz-FsT" firstAttribute="leading" secondItem="gzL-MM-NYc" secondAttribute="leading" constant="100" id="xSj-Pd-OWV"/>
+                                    <constraint firstAttribute="bottom" secondItem="fcr-Vz-FsT" secondAttribute="bottom" constant="30" id="yTr-fS-IwD"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="GGJ-4p-8It">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -290,8 +333,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="GGJ-4p-8It" firstAttribute="bottom" secondItem="Psq-dU-cnN" secondAttribute="bottom" id="DLL-Fq-h2N"/>
+                            <constraint firstItem="Psq-dU-cnN" firstAttribute="bottom" secondItem="gzL-MM-NYc" secondAttribute="bottom" id="HBM-vE-O9N"/>
                             <constraint firstItem="GGJ-4p-8It" firstAttribute="trailing" secondItem="Psq-dU-cnN" secondAttribute="trailing" id="QfC-bj-QXm"/>
+                            <constraint firstItem="gzL-MM-NYc" firstAttribute="leading" secondItem="Psq-dU-cnN" secondAttribute="leading" id="bh5-Gm-7wP"/>
                             <constraint firstItem="GGJ-4p-8It" firstAttribute="leading" secondItem="Psq-dU-cnN" secondAttribute="leading" id="m9O-r2-n8U"/>
+                            <constraint firstItem="Psq-dU-cnN" firstAttribute="trailing" secondItem="gzL-MM-NYc" secondAttribute="trailing" id="mNS-r8-7MB"/>
+                            <constraint firstItem="gzL-MM-NYc" firstAttribute="top" secondItem="Psq-dU-cnN" secondAttribute="top" id="x0Q-n5-fKy"/>
                             <constraint firstItem="GGJ-4p-8It" firstAttribute="top" secondItem="noG-Ez-WgI" secondAttribute="top" id="yps-mQ-wf5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Psq-dU-cnN"/>
@@ -309,6 +356,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="introView" destination="gzL-MM-NYc" id="Q8U-Co-Uw9"/>
                         <outlet property="tableView" destination="GGJ-4p-8It" id="t9o-mB-onb"/>
                         <segue destination="Mc7-d7-5sG" kind="presentation" identifier="MainViewController" id="GmD-2D-QtX"/>
                     </connections>
@@ -355,7 +403,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rGv-WD-gKc"/>
+        <segue reference="GmD-2D-QtX"/>
         <segue reference="wUv-Uk-6Rn"/>
     </inferredMetricsTieBreakers>
 </document>
