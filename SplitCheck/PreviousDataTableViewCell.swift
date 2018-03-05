@@ -12,6 +12,7 @@ class PreviousDataTableViewCell: UITableViewCell {
     
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var date: UILabel!
+    @IBOutlet weak var location: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,5 +29,6 @@ class PreviousDataTableViewCell: UITableViewCell {
     func setUpView(event: Events) {
         title.text = event.title
         date.text = event.date
+        location.text = event.location
     }
 }

@@ -10,13 +10,15 @@ import UIKit
 
 protocol TotalTableViewCellDelegate {
     func totalCheckEntered(value: Double)
-    func nameOfEventEntered(value: String)
+    func nameOfEventEntered(value: String, cellType: CellType)
 }
 
 enum CellType {
     case Name
+    case Location
     case Total
 }
+
 class TotalTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var totalTextField: UITextField!
@@ -53,7 +55,7 @@ class TotalTableViewCell: UITableViewCell, UITextFieldDelegate {
         if cellType == .Total, let text = totalTextField.text?.replacingOccurrences(of: "$", with: ""), text != "", let doubleVal = Double(text) {
             delegate?.totalCheckEntered(value: doubleVal)
         } else if let text = totalTextField.text {
-            delegate?.nameOfEventEntered(value: text)
+            delegate?.nameOfEventEntered(value: text, cellType: cellType)
         }
     }
     

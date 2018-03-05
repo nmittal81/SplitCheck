@@ -17,6 +17,7 @@ class CheckViewController: UIViewController {
     var bannerView: GADBannerView!
     var totalCheck = 0.0
     var titleOfEvent = ""
+    var locationOfEvent = ""
     var memberArray = [MemberOfEvent]()
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var introView: UIView!
@@ -28,6 +29,7 @@ class CheckViewController: UIViewController {
         if UserDefaults.standard.object(forKey: kIntroViewShown) == nil {
             tableView.isHidden = true
         } else {
+            introView.isHidden = true
             addBannerAd()
         }
         // Do any additional setup after loading the view.
@@ -49,9 +51,7 @@ class CheckViewController: UIViewController {
         }
         
         let dismissKeyboardTap = UITapGestureRecognizer(target: self, action: #selector(CheckViewController.dismissKeyboardView))
-        tableView.addGestureRecognizer(dismissKeyboardTap)
-        
-        
+        tableView.addGestureRecognizer(dismissKeyboardTap)        
     }
 
     override func didReceiveMemoryWarning() {
@@ -169,6 +169,7 @@ class CheckViewController: UIViewController {
         
         newEvent.date = myDateString
         newEvent.title = titleOfEvent
+        newEvent.location = locationOfEvent
         newEvent.members = NSSet(array: memberArray)
         self.event = newEvent
         DataBaseController.saveContext()
@@ -179,21 +180,22 @@ class CheckViewController: UIViewController {
 extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch(section) {
-        case 2: return memberArray.count
+        case 3: return memberArray.count
         default: return 1
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch(section) {
-        case 1: return "Enter the amount of check"
-        case 2: return "Please enter name, drinks tab and we will do the rest"
-        case 3: return "Calculate"
+        case 2: return "Enter the amount of check"
+        case 3: return "Enter the location"
+        case 4: return "Please enter name, drinks tab and we will do the rest"
+        case 5: return "Calculate"
         default: return "Name the occasion"
         }
     }
@@ -208,7 +210,7 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        if (section == 2) {
+        if (section == 3) {
             let view = PersonHeaderView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
             view.delegate = self
             return view
@@ -220,9 +222,10 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
         if let headerView = view as? UITableViewHeaderFooterView {
             var headerTitle = ""
             switch(section) {
-            case 1: headerTitle = "Enter the amount of check"
-            case 2: headerTitle = "Please enter name, drinks tab and we will do the rest"
-            case 3: headerTitle = "Calculate"
+            case 1: headerTitle = "Enter the location"
+            case 2: headerTitle = "Enter the amount of check"
+            case 4: headerTitle = "Please enter name, drinks tab and we will do the rest"
+            case 5: headerTitle = "Calculate"
             default: headerTitle = "Name the occasion"
             }
             headerView.textLabel?.text = headerTitle
@@ -244,7 +247,7 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
             }
             cell.delegate = self
             return cell
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TotalTableViewCell", for: indexPath) as! TotalTableViewCell
             if totalCheck != 0.0 {
                 cell.totalTextField.text = "$\(totalCheck)"
@@ -254,6 +257,20 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
             cell.delegate = self
             cell.totalTextField.keyboardType = .decimalPad
             cell.cellType = .Total
+            return cell
+        } else if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TotalTableViewCell", for: indexPath) as! TotalTableViewCell
+            cell.totalTextField.keyboardType = .default
+            cell.totalTextField.placeholder = "LOCATION"
+            cell.delegate = self
+            if locationOfEvent != "" {
+                cell.totalTextField.text = locationOfEvent
+            } else if let event = event {
+                cell.totalTextField.text = event.location
+            } else {
+                cell.totalTextField.text = ""
+            }
+            cell.cellType = .Location
             return cell
         } else if indexPath.section == tableView.numberOfSections - 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitTableViewCell", for: indexPath) as! SubmitTableViewCell
@@ -289,8 +306,12 @@ extension CheckViewController: TotalTableViewCellDelegate {
         self.totalCheck = value
     }
     
-    func nameOfEventEntered(value: String) {
-        self.titleOfEvent = value
+    func nameOfEventEntered(value: String, cellType: CellType) {
+        if cellType == .Name {
+            self.titleOfEvent = value
+        } else {
+            self.locationOfEvent = value
+        }
     }
 }
 
