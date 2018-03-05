@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,12 +19,12 @@
 		5C47EE6497A313694CE09E5E6E0518CC /* Pods-SplitCheck-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SplitCheck-frameworks.sh"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		8C9D62E314CCEF1202F8A35D91784A9A /* Pods-SplitCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SplitCheck.release.xcconfig"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; };
 		9731C1ADFCBCE4470FDBE5FFA5E5EE90 /* Pods-SplitCheck-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SplitCheck-resources.sh"; sourceTree = "<group>"; };
 		A7798DAC7C1BDF496B6DD764E2790DF9 /* Pods-SplitCheck-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SplitCheck-umbrella.h"; sourceTree = "<group>"; };
-		A82B03CDB4C46E4CBF64B92B4FE775AB /* Pods-SplitCheck.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-SplitCheck.modulemap"; sourceTree = "<group>"; };
+		A82B03CDB4C46E4CBF64B92B4FE775AB /* Pods-SplitCheck.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-SplitCheck.modulemap"; sourceTree = "<group>"; };
 		D38EF4D8C60B5E64474C4845E78F2595 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EC6FEA4901C7F1132A44DA9C8C013498 /* Pods_SplitCheck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SplitCheck.framework; path = "Pods-SplitCheck.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC6FEA4901C7F1132A44DA9C8C013498 /* Pods_SplitCheck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SplitCheck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F87BBE855D70C2F87C02A1CCA30E262D /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = Frameworks/frameworks/GoogleMobileAds.framework; sourceTree = "<group>"; };
 		F9C7EBB45CD669F6E73544DF7559EA05 /* Pods-SplitCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SplitCheck.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,7 +105,6 @@
 			children = (
 				953FD61A3CECC96530CB5CA297A086C1 /* Frameworks */,
 			);
-			name = "Google-Mobile-Ads-SDK";
 			path = "Google-Mobile-Ads-SDK";
 			sourceTree = "<group>";
 		};
