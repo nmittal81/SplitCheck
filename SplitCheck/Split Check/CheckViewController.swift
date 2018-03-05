@@ -10,11 +10,11 @@ import UIKit
 import CoreData
 import Contacts
 import ContactsUI
-
-let kIntroViewShown = "IntroViewShown"
- 
+import GoogleMobileAds
+  
 class CheckViewController: UIViewController {
 
+    var bannerView: GADBannerView!
     var totalCheck = 0.0
     var titleOfEvent = ""
     var memberArray = [MemberOfEvent]()
@@ -27,6 +27,8 @@ class CheckViewController: UIViewController {
         
         if UserDefaults.standard.object(forKey: kIntroViewShown) == nil {
             tableView.isHidden = true
+        } else {
+            addBannerAd()
         }
         // Do any additional setup after loading the view.
         
@@ -48,6 +50,8 @@ class CheckViewController: UIViewController {
         
         let dismissKeyboardTap = UITapGestureRecognizer(target: self, action: #selector(CheckViewController.dismissKeyboardView))
         tableView.addGestureRecognizer(dismissKeyboardTap)
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,10 +59,46 @@ class CheckViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    private func addBannerAd() {
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        
+        #if DEBUG
+        bannerView.adUnitID = adMobDebugAppBannerId
+        #else
+        bannerView.adUnitID = adMobAppBannerId
+        #endif
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        bannerView.delegate = self
+        addBannerViewToView(bannerView)
+    }
+    
+    private func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints(
+            [NSLayoutConstraint(item: bannerView,
+                                attribute: .bottom,
+                                relatedBy: .equal,
+                                toItem: bottomLayoutGuide,
+                                attribute: .top,
+                                multiplier: 1,
+                                constant: 0),
+             NSLayoutConstraint(item: bannerView,
+                                attribute: .centerX,
+                                relatedBy: .equal,
+                                toItem: view,
+                                attribute: .centerX,
+                                multiplier: 1,
+                                constant: 0)
+            ])
+    }
+    
     @IBAction func closeIntroView(_ sender: Any) {
         introView.isHidden = true
         tableView.isHidden = false
         UserDefaults.standard.set(true, forKey: kIntroViewShown)
+        addBannerAd()
     }
 
     @objc func dismissKeyboardView() {
@@ -151,7 +191,7 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch(section) {
-        case 1: return "Enter total amount of your check"
+        case 1: return "Enter the amount of check"
         case 2: return "Please enter name, drinks tab and we will do the rest"
         case 3: return "Calculate"
         default: return "Name the occasion"
@@ -174,6 +214,19 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
             return view
         }
         return nil
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let headerView = view as? UITableViewHeaderFooterView {
+            var headerTitle = ""
+            switch(section) {
+            case 1: headerTitle = "Enter the amount of check"
+            case 2: headerTitle = "Please enter name, drinks tab and we will do the rest"
+            case 3: headerTitle = "Calculate"
+            default: headerTitle = "Name the occasion"
+            }
+            headerView.textLabel?.text = headerTitle
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -318,6 +371,46 @@ extension CheckViewController: PersonHeaderViewDelegate {
         }
     }
 }
+ 
+ extension CheckViewController: GADBannerViewDelegate {
+    /// Tells the delegate an ad request loaded an ad.
+    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("adViewDidReceiveAd")
+        bannerView.alpha = 0
+        UIView.animate(withDuration: 1, animations: {
+            bannerView.alpha = 1
+        })
+        addBannerViewToView(bannerView)
+    }
+    
+    /// Tells the delegate an ad request failed.
+    func adView(_ bannerView: GADBannerView,
+                didFailToReceiveAdWithError error: GADRequestError) {
+        print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+    
+    /// Tells the delegate that a full-screen view will be presented in response
+    /// to the user clicking on an ad.
+    func adViewWillPresentScreen(_ bannerView: GADBannerView) {
+        print("adViewWillPresentScreen")
+    }
+    
+    /// Tells the delegate that the full-screen view will be dismissed.
+    func adViewWillDismissScreen(_ bannerView: GADBannerView) {
+        print("adViewWillDismissScreen")
+    }
+    
+    /// Tells the delegate that the full-screen view has been dismissed.
+    func adViewDidDismissScreen(_ bannerView: GADBannerView) {
+        print("adViewDidDismissScreen")
+    }
+    
+    /// Tells the delegate that a user click will open another app (such as
+    /// the App Store), backgrounding the current app.
+    func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
+        print("adViewWillLeaveApplication")
+    }
+ }
  
  extension UIViewController {
     func hideKeyboardWhenTappedAround() {

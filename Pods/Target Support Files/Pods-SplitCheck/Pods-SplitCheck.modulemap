@@ -1,0 +1,6 @@
+framework module Pods_SplitCheck {
+  umbrella header "Pods-SplitCheck-umbrella.h"
+
+  export *
+  module * { export * }
+}
