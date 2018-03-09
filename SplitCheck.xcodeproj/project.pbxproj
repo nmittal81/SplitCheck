@@ -17,6 +17,7 @@
 		7C021CE6202B511300902842 /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C021CE5202B511300902842 /* PersonTableViewCell.swift */; };
 		7C021CE8202B645100902842 /* TotalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C021CE7202B645100902842 /* TotalTableViewCell.swift */; };
 		7C021CEA202B649900902842 /* SubmitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C021CE9202B649900902842 /* SubmitTableViewCell.swift */; };
+		7C14FE93205185B4008E2086 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C14FE92205185B4008E2086 /* LocationTableViewCell.swift */; };
 		7C7DE6ED20334956004DDECD /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7C7DE6EB20334956004DDECD /* Model.xcdatamodeld */; };
 		7C7DE7202033595B004DDECD /* DataBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7DE71F2033595B004DDECD /* DataBaseController.swift */; };
 		7C7DE73B20335BCF004DDECD /* MemberOfEvent+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7DE73920335BCF004DDECD /* MemberOfEvent+CoreDataClass.swift */; };
@@ -47,6 +48,7 @@
 		7C021CE5202B511300902842 /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
 		7C021CE7202B645100902842 /* TotalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalTableViewCell.swift; sourceTree = "<group>"; };
 		7C021CE9202B649900902842 /* SubmitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitTableViewCell.swift; sourceTree = "<group>"; };
+		7C14FE92205185B4008E2086 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		7C7DE6EC20334956004DDECD /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7C7DE71F2033595B004DDECD /* DataBaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseController.swift; sourceTree = "<group>"; };
 		7C7DE73920335BCF004DDECD /* MemberOfEvent+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemberOfEvent+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				7C021CE7202B645100902842 /* TotalTableViewCell.swift */,
 				7C021CE9202B649900902842 /* SubmitTableViewCell.swift */,
 				7C7DE74A203508DC004DDECD /* PersonHeaderView.swift */,
+				7C14FE92205185B4008E2086 /* LocationTableViewCell.swift */,
 			);
 			path = "Split Check";
 			sourceTree = "<group>";
@@ -261,9 +264,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SplitCheck/Pods-SplitCheck-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Resources/GooglePlacePicker.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -304,6 +312,7 @@
 				7C7DE73C20335BCF004DDECD /* MemberOfEvent+CoreDataProperties.swift in Sources */,
 				7C021CEA202B649900902842 /* SubmitTableViewCell.swift in Sources */,
 				7C7DE73E203365B0004DDECD /* PreviousDataTableViewCell.swift in Sources */,
+				7C14FE93205185B4008E2086 /* LocationTableViewCell.swift in Sources */,
 				7C7DE74420338579004DDECD /* GenericExtensions.swift in Sources */,
 				7C7DE74B203508DC004DDECD /* PersonHeaderView.swift in Sources */,
 				7C021CE6202B511300902842 /* PersonTableViewCell.swift in Sources */,

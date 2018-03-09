@@ -259,18 +259,17 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
             cell.cellType = .Total
             return cell
         } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TotalTableViewCell", for: indexPath) as! TotalTableViewCell
-            cell.totalTextField.keyboardType = .default
-            cell.totalTextField.placeholder = "LOCATION"
-            cell.delegate = self
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LocationTableViewCell", for: indexPath) as! LocationTableViewCell
+            cell.locationTextField.keyboardType = .default
+            cell.locationTextField.placeholder = "LOCATION"
+//            cell.delegate = self
             if locationOfEvent != "" {
-                cell.totalTextField.text = locationOfEvent
+                cell.locationTextField.text = locationOfEvent
             } else if let event = event {
-                cell.totalTextField.text = event.location
+                cell.locationTextField.text = event.location
             } else {
-                cell.totalTextField.text = ""
+                cell.locationTextField.text = ""
             }
-            cell.cellType = .Location
             return cell
         } else if indexPath.section == tableView.numberOfSections - 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitTableViewCell", for: indexPath) as! SubmitTableViewCell

@@ -5,4 +5,7 @@ use_frameworks!
 target 'SplitCheck' do
     
     pod 'Google-Mobile-Ads-SDK'
+    pod 'GooglePlaces'
+    pod 'GooglePlacePicker'
+    pod 'GoogleMaps'
 end
