@@ -11,13 +11,15 @@ import CoreData
 import Contacts
 import ContactsUI
 import GoogleMobileAds
+ 
+ let memberSection = 3
   
 class CheckViewController: UIViewController {
 
     var bannerView: GADBannerView!
     var totalCheck = 0.0
     var titleOfEvent = ""
-    var locationOfEvent = ""
+    var locationOfEvent: OrgSearch?
     var memberArray = [MemberOfEvent]()
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var introView: UIView!
@@ -41,6 +43,11 @@ class CheckViewController: UIViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(CheckViewController.keyboardWillHide(_:)),
                                                name: NSNotification.Name.UIKeyboardWillHide,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(CheckViewController.pushGoogleVC(_:)),
+                                               name: NSNotification.Name(rawValue: "LocationEdit"),
                                                object: nil)
         
         if let event = event {
@@ -151,6 +158,10 @@ class CheckViewController: UIViewController {
         })
     }
     
+    @objc func pushGoogleVC(_ notification: Notification) {
+        performSegue(withIdentifier: "GooglePlacesViewController", sender: self)
+    }
+    
     func saveDetailsToDB() {
         var newEvent: Events
         if let savedEvent = event {
@@ -169,7 +180,7 @@ class CheckViewController: UIViewController {
         
         newEvent.date = myDateString
         newEvent.title = titleOfEvent
-        newEvent.location = locationOfEvent
+        newEvent.location = locationOfEvent?.title
         newEvent.members = NSSet(array: memberArray)
         self.event = newEvent
         DataBaseController.saveContext()
@@ -185,7 +196,7 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch(section) {
-        case 3: return memberArray.count
+        case memberSection: return memberArray.count
         default: return 1
         }
     }
@@ -210,7 +221,7 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        if (section == 3) {
+        if (section == memberSection) {
             let view = PersonHeaderView.init(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
             view.delegate = self
             return view
@@ -263,8 +274,8 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
             cell.locationTextField.keyboardType = .default
             cell.locationTextField.placeholder = "LOCATION"
 //            cell.delegate = self
-            if locationOfEvent != "" {
-                cell.locationTextField.text = locationOfEvent
+            if let locationOfEvent = locationOfEvent {
+                cell.locationTextField.text = locationOfEvent.title
             } else if let event = event {
                 cell.locationTextField.text = event.location
             } else {
@@ -285,7 +296,7 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if (indexPath.section == 2) {
+        if (indexPath.section == 3) {
             return true
         }
         return false
@@ -293,9 +304,16 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        if ((indexPath.section == 2) && editingStyle == UITableViewCellEditingStyle.delete) {
+        if ((indexPath.section == memberSection) && editingStyle == UITableViewCellEditingStyle.delete) {
             memberArray.remove(at: indexPath.row)
             tableView.reloadData()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Coming here instead")
+        if indexPath.section == 1 {
+            performSegue(withIdentifier: "GooglePlacesViewController", sender: self)
         }
     }
 }
@@ -308,8 +326,6 @@ extension CheckViewController: TotalTableViewCellDelegate {
     func nameOfEventEntered(value: String, cellType: CellType) {
         if cellType == .Name {
             self.titleOfEvent = value
-        } else {
-            self.locationOfEvent = value
         }
     }
 }
@@ -429,17 +445,5 @@ extension CheckViewController: PersonHeaderViewDelegate {
     /// the App Store), backgrounding the current app.
     func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
         print("adViewWillLeaveApplication")
-    }
- }
- 
- extension UIViewController {
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
     }
  }

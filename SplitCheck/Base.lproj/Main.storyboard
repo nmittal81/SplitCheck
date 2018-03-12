@@ -123,10 +123,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gzL-MM-NYc">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fcr-Vz-FsT">
-                                        <rect key="frame" x="100" y="540" width="175" height="33"/>
+                                        <rect key="frame" x="100" y="584" width="175" height="33"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                         <state key="normal" title="Continue"/>
                                         <connections>
@@ -134,7 +134,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tDc-8O-dRE">
-                                        <rect key="frame" x="10" y="100" width="355" height="403"/>
+                                        <rect key="frame" x="10" y="100" width="355" height="447"/>
                                         <string key="text">Enter the occasion you are celebrating, your total check amount, add the people attending the event from either your contact book or manually, add each individual's drinks and then we will calculate each person's share.</string>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -208,46 +208,16 @@
                                                         <outlet property="delegate" destination="J0A-sz-GOu" id="HnG-Z5-Omt"/>
                                                     </connections>
                                                 </textField>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="mwK-PJ-6Tr">
-                                                    <rect key="frame" x="177" y="11.5" width="20" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </activityIndicatorView>
-                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ue3-eE-aAN">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="128" id="dxB-rV-Cz3"/>
-                                                    </constraints>
-                                                    <prototypes>
-                                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GoogleSearchTableViewCell" id="M2C-iA-9gh">
-                                                            <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="M2C-iA-9gh" id="7S0-PJ-evP">
-                                                                <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
-                                                            </tableViewCellContentView>
-                                                        </tableViewCell>
-                                                    </prototypes>
-                                                    <connections>
-                                                        <outlet property="dataSource" destination="J0A-sz-GOu" id="Gkd-bL-UbC"/>
-                                                        <outlet property="delegate" destination="J0A-sz-GOu" id="xkd-e3-CzO"/>
-                                                    </connections>
-                                                </tableView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="qzo-J8-aSZ" firstAttribute="leading" secondItem="a6g-5D-4AF" secondAttribute="leading" constant="20" id="7D0-pa-ECs"/>
-                                                <constraint firstAttribute="trailing" secondItem="ue3-eE-aAN" secondAttribute="trailing" id="EPD-fz-KPt"/>
-                                                <constraint firstItem="ue3-eE-aAN" firstAttribute="leading" secondItem="a6g-5D-4AF" secondAttribute="leading" id="Pzl-fY-tB7"/>
-                                                <constraint firstItem="ue3-eE-aAN" firstAttribute="top" secondItem="a6g-5D-4AF" secondAttribute="top" id="e3V-GF-eDW"/>
                                                 <constraint firstAttribute="bottom" secondItem="qzo-J8-aSZ" secondAttribute="bottom" constant="8" id="wiP-8H-obh"/>
                                                 <constraint firstAttribute="trailing" secondItem="qzo-J8-aSZ" secondAttribute="trailing" constant="20" id="xIZ-o8-WlY"/>
                                                 <constraint firstItem="qzo-J8-aSZ" firstAttribute="top" secondItem="a6g-5D-4AF" secondAttribute="top" constant="8" id="yYg-V1-irG"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="activityIndicatorView" destination="mwK-PJ-6Tr" id="1xZ-ld-2fu"/>
                                             <outlet property="locationTextField" destination="qzo-J8-aSZ" id="SDK-DG-AkC"/>
-                                            <outlet property="subTableView" destination="ue3-eE-aAN" id="dYk-JD-Tby"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="PersonTableViewCell" id="hq9-kq-kgr" customClass="PersonTableViewCell" customModule="SplitCheck" customModuleProvider="target">
@@ -425,11 +395,96 @@
                         <outlet property="introView" destination="gzL-MM-NYc" id="Q8U-Co-Uw9"/>
                         <outlet property="tableView" destination="GGJ-4p-8It" id="t9o-mB-onb"/>
                         <segue destination="Mc7-d7-5sG" kind="presentation" identifier="MainViewController" id="GmD-2D-QtX"/>
+                        <segue destination="Kt5-xS-Bdw" kind="show" identifier="GooglePlacesViewController" id="eQQ-B4-7KF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="74y-26-RQv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1216.8" y="87.706146926536732"/>
+        </scene>
+        <!--Google Places View Controller-->
+        <scene sceneID="KT9-bF-wQz">
+            <objects>
+                <viewController id="Kt5-xS-Bdw" customClass="GooglePlacesViewController" customModule="SplitCheck" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="c7V-Zu-Aft">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search for organizations" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPe-fP-EZc">
+                                <rect key="frame" x="16" y="30" width="343" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eEs-73-U7K">
+                                <rect key="frame" x="16" y="55.5" width="343" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" enablesReturnKeyAutomatically="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" red="0.2666666667" green="0.44705882349999998" blue="0.76862745099999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="delegate" destination="Kt5-xS-Bdw" id="PP4-mT-UwE"/>
+                                </connections>
+                            </textField>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="1M8-sL-55A">
+                                <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9o4-P9-K3w">
+                                <rect key="frame" x="8" y="85.5" width="351" height="581.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GoogleSearchTableViewCell" id="YFu-XL-65K">
+                                        <rect key="frame" x="0.0" y="28" width="351" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YFu-XL-65K" id="Uet-5a-pKy">
+                                            <rect key="frame" x="0.0" y="0.0" width="351" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Kt5-xS-Bdw" id="Bge-cN-9vz"/>
+                                    <outlet property="delegate" destination="Kt5-xS-Bdw" id="w8P-KB-wc4"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="R1u-qo-HTG" firstAttribute="bottom" secondItem="9o4-P9-K3w" secondAttribute="bottom" id="48h-eX-hos"/>
+                            <constraint firstItem="9o4-P9-K3w" firstAttribute="top" secondItem="eEs-73-U7K" secondAttribute="bottom" id="77a-s8-uj7"/>
+                            <constraint firstItem="aPe-fP-EZc" firstAttribute="top" secondItem="R1u-qo-HTG" secondAttribute="top" constant="10" id="8uz-yR-uyG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9o4-P9-K3w" secondAttribute="trailing" id="Blu-xh-rbe"/>
+                            <constraint firstItem="1M8-sL-55A" firstAttribute="centerX" secondItem="c7V-Zu-Aft" secondAttribute="centerX" id="Ehq-Zz-7f8"/>
+                            <constraint firstItem="1M8-sL-55A" firstAttribute="centerY" secondItem="c7V-Zu-Aft" secondAttribute="centerY" id="FSB-IO-3Zm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eEs-73-U7K" secondAttribute="trailing" id="PhA-i0-uFH"/>
+                            <constraint firstItem="9o4-P9-K3w" firstAttribute="leading" secondItem="c7V-Zu-Aft" secondAttribute="leadingMargin" constant="-8" id="RpS-bX-SNW"/>
+                            <constraint firstItem="eEs-73-U7K" firstAttribute="leading" secondItem="c7V-Zu-Aft" secondAttribute="leadingMargin" id="ZOd-FD-8pe"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aPe-fP-EZc" secondAttribute="trailing" id="f8d-MF-x1t"/>
+                            <constraint firstItem="aPe-fP-EZc" firstAttribute="leading" secondItem="c7V-Zu-Aft" secondAttribute="leadingMargin" id="pxo-HG-apG"/>
+                            <constraint firstItem="eEs-73-U7K" firstAttribute="top" secondItem="aPe-fP-EZc" secondAttribute="bottom" constant="5" id="xNx-59-X3K"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="R1u-qo-HTG"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicatorView" destination="1M8-sL-55A" id="3dF-1o-6b2"/>
+                        <outlet property="searchTextField" destination="eEs-73-U7K" id="uje-rp-GiO"/>
+                        <outlet property="tableView" destination="9o4-P9-K3w" id="yWz-fa-nTD"/>
+                        <segue destination="kR5-BD-P5J" kind="show" identifier="CheckViewFromGoogle" id="wLm-GQ-S4x"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="45Q-op-4pP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2096" y="118"/>
         </scene>
         <!--Split Check-->
         <scene sceneID="QgC-cf-FJQ">
@@ -469,7 +524,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="GmD-2D-QtX"/>
-        <segue reference="wUv-Uk-6Rn"/>
+        <segue reference="wLm-GQ-S4x"/>
     </inferredMetricsTieBreakers>
 </document>
