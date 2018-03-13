@@ -51,7 +51,6 @@ class GooglePlacesViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        searchTextField.resignFirstResponder()
         searchTextField.text = ""
         tableView.isHidden = true
     }
