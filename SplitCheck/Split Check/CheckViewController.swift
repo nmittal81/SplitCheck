@@ -55,6 +55,8 @@ class CheckViewController: UIViewController {
             if let _ = event.members {
                 tableView.reloadData()
             }
+        } else {
+            event = NSEntityDescription.insertNewObject(forEntityName: "Events", into: DataBaseController.getContext()) as? Events
         }
         
         let dismissKeyboardTap = UITapGestureRecognizer(target: self, action: #selector(CheckViewController.dismissKeyboardView))
@@ -163,29 +165,30 @@ class CheckViewController: UIViewController {
     }
     
     func saveDetailsToDB() {
-        var newEvent: Events
-        if let savedEvent = event {
-            newEvent = savedEvent
+        if let newEvent = event {
             newEvent.removeFromMembers(newEvent.members!)
-        } else {
-            newEvent = NSEntityDescription.insertNewObject(forEntityName: "Events", into: DataBaseController.getContext()) as! Events
+            newEvent.amount = self.totalCheck
+            newEvent.number = Int16(memberArray.count)
+            let formatter = DateFormatter()
+            // initially set the format based on your datepicker date
+            formatter.dateFormat = "MMM d, yyyy"
+            
+            let myDateString = formatter.string(from: Date())
+            
+            newEvent.date = myDateString
+            newEvent.title = titleOfEvent
+            newEvent.location = locationOfEvent?.title
+            newEvent.members = NSSet(array: memberArray)
+            self.event = newEvent
+            DataBaseController.saveContext()
         }
-        newEvent.amount = self.totalCheck
-        newEvent.number = Int16(memberArray.count)
-        let formatter = DateFormatter()
-        // initially set the format based on your datepicker date
-        formatter.dateFormat = "MMM d, yyyy"
-        
-        let myDateString = formatter.string(from: Date())
-        
-        newEvent.date = myDateString
-        newEvent.title = titleOfEvent
-        newEvent.location = locationOfEvent?.title
-        newEvent.members = NSSet(array: memberArray)
-        self.event = newEvent
-        DataBaseController.saveContext()
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "GooglePlacesViewController", let vc = segue.destination as? GooglePlacesViewController, let event = event {
+            vc.event = event
+        }
+    }
 }
 
 extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
@@ -249,9 +252,7 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
             cell.totalTextField.keyboardType = .default
             cell.totalTextField.placeholder = "NAME"
             cell.cellType = .Name
-            if titleOfEvent != "" {
-                cell.totalTextField.text = titleOfEvent
-            } else if let event = event {
+            if let event = event {
                 cell.totalTextField.text = event.title
             } else {
                 cell.totalTextField.text = ""
@@ -260,11 +261,13 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         } else if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TotalTableViewCell", for: indexPath) as! TotalTableViewCell
-            if totalCheck != 0.0 {
-                cell.totalTextField.text = "$\(totalCheck)"
+            
+            if let event = event {
+                cell.totalTextField.text = "$\(event.amount)"
             } else {
                 cell.totalTextField.text = ""
             }
+
             cell.delegate = self
             cell.totalTextField.keyboardType = .decimalPad
             cell.cellType = .Total
@@ -273,10 +276,7 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LocationTableViewCell", for: indexPath) as! LocationTableViewCell
             cell.locationTextField.keyboardType = .default
             cell.locationTextField.placeholder = "LOCATION"
-//            cell.delegate = self
-            if let locationOfEvent = locationOfEvent {
-                cell.locationTextField.text = locationOfEvent.title
-            } else if let event = event {
+            if let event = event {
                 cell.locationTextField.text = event.location
             } else {
                 cell.locationTextField.text = ""
@@ -310,22 +310,25 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Coming here instead")
-        if indexPath.section == 1 {
-            performSegue(withIdentifier: "GooglePlacesViewController", sender: self)
-        }
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if indexPath.section == 1 {
+//            performSegue(withIdentifier: "GooglePlacesViewController", sender: self)
+//        }
+//    }
 }
 
 extension CheckViewController: TotalTableViewCellDelegate {
     func totalCheckEntered(value: Double) {
-        self.totalCheck = value
+        if let event = event {
+            event.amount = value
+            self.totalCheck = value
+        }
     }
     
     func nameOfEventEntered(value: String, cellType: CellType) {
-        if cellType == .Name {
-            self.titleOfEvent = value
+        if cellType == .Name, let event = event {
+            event.title = value
+            self.title = value
         }
     }
 }
@@ -363,6 +366,7 @@ extension CheckViewController: SubmitTableViewCellDelegate {
         totalCheck = 0.0
         titleOfEvent = ""
         tableView.reloadData()
+        event = NSEntityDescription.insertNewObject(forEntityName: "Events", into: DataBaseController.getContext()) as? Events
     }
 }
 

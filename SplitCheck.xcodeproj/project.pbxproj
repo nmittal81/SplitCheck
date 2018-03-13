@@ -50,6 +50,7 @@
 		7C021CE7202B645100902842 /* TotalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalTableViewCell.swift; sourceTree = "<group>"; };
 		7C021CE9202B649900902842 /* SubmitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitTableViewCell.swift; sourceTree = "<group>"; };
 		7C06CEFD2056DC2700517D94 /* GooglePlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GooglePlacesViewController.swift; path = SplitCheck/GooglePlacesViewController.swift; sourceTree = SOURCE_ROOT; };
+		7C06CEFF205826F400517D94 /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
 		7C14FE92205185B4008E2086 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		7C7DE6EC20334956004DDECD /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7C7DE71F2033595B004DDECD /* DataBaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseController.swift; sourceTree = "<group>"; };
@@ -514,9 +515,10 @@
 		7C7DE6EB20334956004DDECD /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				7C06CEFF205826F400517D94 /* Model 2.xcdatamodel */,
 				7C7DE6EC20334956004DDECD /* Model.xcdatamodel */,
 			);
-			currentVersion = 7C7DE6EC20334956004DDECD /* Model.xcdatamodel */;
+			currentVersion = 7C06CEFF205826F400517D94 /* Model 2.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

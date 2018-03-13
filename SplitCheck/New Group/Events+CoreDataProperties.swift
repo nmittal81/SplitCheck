@@ -23,7 +23,9 @@ extension Events {
     @NSManaged public var location: String?
     @NSManaged public var number: Int16
     @NSManaged public var members: NSSet?
-
+    @NSManaged public var latitude: Double
+    @NSManaged public var longitude: Double
+    
 }
 
 // MARK: Generated accessors for members
