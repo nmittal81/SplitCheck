@@ -167,7 +167,6 @@ class CheckViewController: UIViewController {
     func saveDetailsToDB() {
         if let newEvent = event {
             newEvent.removeFromMembers(newEvent.members!)
-            newEvent.amount = self.totalCheck
             newEvent.number = Int16(memberArray.count)
             let formatter = DateFormatter()
             // initially set the format based on your datepicker date
@@ -176,8 +175,6 @@ class CheckViewController: UIViewController {
             let myDateString = formatter.string(from: Date())
             
             newEvent.date = myDateString
-            newEvent.title = titleOfEvent
-            newEvent.location = locationOfEvent?.title
             newEvent.members = NSSet(array: memberArray)
             self.event = newEvent
             DataBaseController.saveContext()
