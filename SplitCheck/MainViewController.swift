@@ -8,9 +8,11 @@
 
 import UIKit
 import CoreData
+import MapKit
 
 class MainViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var mapView: MKMapView!
     
     var dataPreviouslyStored = [Events]()
     var selectedEvent: Events?
@@ -28,11 +30,19 @@ class MainViewController: UIViewController {
         let fetchRequest:NSFetchRequest<Events> = Events.fetchRequest()
         do {
             dataPreviouslyStored = try DataBaseController.getContext().fetch(fetchRequest)
-            if dataPreviouslyStored.count == 0 {
-                tableView.isHidden = true
-            } else {
-                noEventsLabel.isHidden = true
-                tableView.reloadData()
+            
+            for event in dataPreviouslyStored {
+                if let title = event.title {
+                    noEventsLabel.isHidden = true
+                    tableView.reloadData()
+                    let lat = event.latitude
+                    let long = event.longitude
+                    let mapAnnotation = MapAnnotations.init(title: title, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: long))
+                    mapView.addAnnotation(mapAnnotation)
+                } else {
+                    tableView.isHidden = true
+                    mapView.isHidden = true
+                }
             }
         } catch {
             print("Error \(error)")
@@ -98,5 +108,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             tableView.reloadData()
         }
     }
+}
+
+extension MainViewController: MKMapViewDelegate {
 }
 

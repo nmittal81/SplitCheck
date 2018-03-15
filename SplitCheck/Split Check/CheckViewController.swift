@@ -268,6 +268,7 @@ extension CheckViewController: UITableViewDataSource, UITableViewDelegate {
             cell.delegate = self
             cell.totalTextField.keyboardType = .decimalPad
             cell.cellType = .Total
+            cell.totalTextField.clearsOnBeginEditing = true
             return cell
         } else if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LocationTableViewCell", for: indexPath) as! LocationTableViewCell

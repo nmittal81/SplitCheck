@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,8 +31,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="AgR-FM-eAc">
+                                <rect key="frame" x="8" y="333.5" width="359" height="333.5"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="8KL-Ea-NgB"/>
+                                </connections>
+                            </mapView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9D1-nJ-aHl">
-                                <rect key="frame" x="8" y="84" width="359" height="583"/>
+                                <rect key="frame" x="8" y="84" width="359" height="249.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PreviousDataCell" rowHeight="93" id="I0G-KU-L8y" customClass="PreviousDataTableViewCell" customModule="SplitCheck" customModuleProvider="target">
@@ -87,13 +94,17 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="AgR-FM-eAc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="0RF-xm-rc5"/>
+                            <constraint firstItem="9D1-nJ-aHl" firstAttribute="bottom" secondItem="AgR-FM-eAc" secondAttribute="top" id="Qfv-4t-cPV"/>
                             <constraint firstItem="9D1-nJ-aHl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="Rqa-8n-C9E"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9D1-nJ-aHl" secondAttribute="trailing" constant="8" id="W9k-LA-FhR"/>
                             <constraint firstItem="nrf-KT-uTC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="WTP-hp-B6f"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nrf-KT-uTC" secondAttribute="trailing" constant="100" id="XPT-w4-be8"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="AgR-FM-eAc" secondAttribute="trailing" constant="8" id="bV1-RQ-Gbe"/>
+                            <constraint firstItem="AgR-FM-eAc" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.5" id="dLQ-FA-3mY"/>
                             <constraint firstItem="9D1-nJ-aHl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="fG2-S0-WfS"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="9D1-nJ-aHl" secondAttribute="bottom" id="gAs-Sg-VcT"/>
                             <constraint firstItem="nrf-KT-uTC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="o2j-dD-MlM"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="AgR-FM-eAc" secondAttribute="bottom" id="wtX-Js-A5e"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -105,6 +116,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="mapView" destination="AgR-FM-eAc" id="FVF-qv-eaY"/>
                         <outlet property="noEventsLabel" destination="nrf-KT-uTC" id="fZq-uz-WYM"/>
                         <outlet property="tableView" destination="9D1-nJ-aHl" id="1PT-gt-0VS"/>
                         <segue destination="kR5-BD-P5J" kind="show" identifier="CheckViewController" id="wUv-Uk-6Rn"/>
@@ -524,6 +536,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="wLm-GQ-S4x"/>
+        <segue reference="wUv-Uk-6Rn"/>
     </inferredMetricsTieBreakers>
 </document>
